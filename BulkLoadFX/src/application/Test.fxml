@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane prefHeight="500.0" prefWidth="645.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Windchill">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="7.0" prefHeight="452.0" prefWidth="293.0" text="Source">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="41.0" text="Server:" />
+                                    <TextField layoutX="135.0" layoutY="10.0" />
+                                    <Label layoutX="14.0" layoutY="57.0" text="Certificate Name:" />
+                                    <TextField layoutX="135.0" layoutY="53.0" />
+                                    <Label layoutX="14.0" layoutY="105.0" text="Username:" />
+                                    <TextField layoutX="135.0" layoutY="101.0" />
+                                    <Label layoutX="14.0" layoutY="151.0" text="Password:" />
+                                    <TextField layoutX="135.0" layoutY="147.0" />
+                                    <Label layoutX="14.0" layoutY="196.0" text="Version:" />
+                                    <RadioButton layoutX="135.0" layoutY="196.0" mnemonicParsing="false" text="8.0" />
+                                    <RadioButton layoutX="179.0" layoutY="196.0" mnemonicParsing="false" text="9.x" />
+                                    <RadioButton layoutX="221.0" layoutY="196.0" mnemonicParsing="false" text="10.0,10.1" />
+                                    <RadioButton layoutX="136.0" layoutY="220.0" mnemonicParsing="false" text="10.2+" />
+                                    <Button layoutX="109.0" layoutY="301.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="106.0" text="Test Connection" wrapText="true" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <TitledPane animated="false" collapsible="false" layoutX="334.0" layoutY="7.0" prefHeight="452.0" prefWidth="293.0" text="Target">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="41.0" text="Server:" />
+                                    <TextField layoutX="135.0" layoutY="10.0" />
+                                    <Label layoutX="14.0" layoutY="57.0" text="Certificate Name:" />
+                                    <TextField layoutX="135.0" layoutY="53.0" />
+                                    <Label layoutX="14.0" layoutY="105.0" text="Username:" />
+                                    <TextField layoutX="135.0" layoutY="101.0" />
+                                    <Label layoutX="14.0" layoutY="151.0" text="Password:" />
+                                    <TextField layoutX="135.0" layoutY="147.0" />
+                                    <Label layoutX="14.0" layoutY="196.0" text="Version:" />
+                                    <RadioButton layoutX="136.0" layoutY="196.0" mnemonicParsing="false" text="10.2+" />
+                                    <Button layoutX="109.0" layoutY="301.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="106.0" text="Test Connection" wrapText="true" />
+                                    <RadioButton layoutX="188.0" layoutY="196.0" mnemonicParsing="false" text="12.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Database">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="14.0" prefHeight="133.0" prefWidth="601.0" text="Database settings">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="14.0" text="Host" />
+                                    <TextField layoutX="74.0" layoutY="10.0" prefHeight="25.0" prefWidth="473.0" />
+                                    <Label layoutX="13.0" layoutY="45.0" text="Database" />
+                                    <TextField layoutX="74.0" layoutY="41.0" />
+                                    <Label layoutX="13.0" layoutY="77.0" text="Username" />
+                                    <TextField layoutX="74.0" layoutY="73.0" />
+                                    <Label layoutX="286.0" layoutY="45.0" text="Port" />
+                                    <Label layoutX="283.0" layoutY="77.0" text="Password" />
+                                    <TextField layoutX="364.0" layoutY="41.0" prefHeight="25.0" prefWidth="183.0" />
+                                    <TextField layoutX="364.0" layoutY="73.0" prefHeight="25.0" prefWidth="183.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                        <Button layoutX="504.0" layoutY="156.0" mnemonicParsing="false" text="Test Connection" />
+                        <TabPane layoutX="15.0" layoutY="185.0" prefHeight="322.0" prefWidth="608.0" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab text="Export">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="277.0" prefWidth="608.0">
+                                       <children>
+                                          <TitledPane animated="false" collapsible="false" layoutX="15.0" layoutY="7.0" prefHeight="98.0" prefWidth="527.0" text="Select Table Info">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label layoutX="24.0" layoutY="14.0" text="Table Name:" />
+                                                      <TextField layoutX="98.0" layoutY="10.0" />
+                                                      <CheckBox layoutX="274.0" layoutY="14.0" mnemonicParsing="false" text="Latest Version Flag" />
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </TitledPane>
+                                          <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="111.0" prefHeight="55.0" prefWidth="529.0" text="Output Filter">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <CheckBox layoutX="21.0" layoutY="7.0" mnemonicParsing="false" text="DISTINCT" />
+                                                      <CheckBox layoutX="108.0" layoutY="7.0" mnemonicParsing="false" text="WHERE" />
+                                                      <TextField layoutX="176.0" layoutY="3.0" prefHeight="25.0" prefWidth="231.0" />
+                                                      <Button layoutX="429.0" layoutY="3.0" mnemonicParsing="false" text="Info" />
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </TitledPane>
+                                          <TitledPane animated="false" collapsible="false" layoutX="15.0" layoutY="170.0" prefHeight="123.0" prefWidth="532.0" text="Output File">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label layoutX="14.0" layoutY="5.0" text="Save Directory:" />
+                                                      <Label layoutX="14.0" layoutY="31.0" text="FileName:" />
+                                                      <Label layoutX="14.0" layoutY="52.0" text="Format:" />
+                                                      <Label layoutX="14.0" layoutY="74.0" text="CSV Delimiter:" />
+                                                      <TextField layoutX="103.0" layoutY="1.0" prefHeight="13.0" prefWidth="324.0" />
+                                                      <TextField layoutX="103.0" layoutY="27.0" />
+                                                      <RadioButton layoutX="103.0" layoutY="52.0" mnemonicParsing="false" text="CSV" />
+                                                      <RadioButton layoutX="153.0" layoutY="52.0" mnemonicParsing="false" text="XLSX" />
+                                                      <TextField layoutX="103.0" layoutY="70.0" />
+                                                      <Button layoutX="441.0" layoutY="1.0" mnemonicParsing="false" text="..." />
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </TitledPane>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                            <Tab text="Update">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </Tab>
+                          </tabs>
+                        </TabPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Export">
+          	<content>
+          		<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TitledPane animated="false" layoutX="14.0" layoutY="14.0" prefHeight="225.0" prefWidth="313.0" text="untitled">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </TitledPane>
+                     </children></AnchorPane>
+          	</content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</HBox>
