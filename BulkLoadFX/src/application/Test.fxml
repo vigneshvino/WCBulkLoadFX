@@ -3,15 +3,17 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
    <children>
       <TabPane prefHeight="500.0" prefWidth="645.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -32,10 +34,13 @@
                                     <Label layoutX="14.0" layoutY="151.0" text="Password:" />
                                     <TextField layoutX="135.0" layoutY="147.0" />
                                     <Label layoutX="14.0" layoutY="196.0" text="Version:" />
-                                    <RadioButton layoutX="135.0" layoutY="196.0" mnemonicParsing="false" text="8.0" />
-                                    <RadioButton layoutX="179.0" layoutY="196.0" mnemonicParsing="false" text="9.x" />
-                                    <RadioButton layoutX="221.0" layoutY="196.0" mnemonicParsing="false" text="10.0,10.1" />
-                                    <RadioButton layoutX="136.0" layoutY="220.0" mnemonicParsing="false" text="10.2+" />
+                                    <RadioButton layoutX="135.0" layoutY="196.0" mnemonicParsing="false" text="8.0">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="srcVersion" />
+                                       </toggleGroup></RadioButton>
+                                    <RadioButton layoutX="179.0" layoutY="196.0" mnemonicParsing="false" text="9.x" toggleGroup="$srcVersion" />
+                                    <RadioButton layoutX="221.0" layoutY="196.0" mnemonicParsing="false" text="10.0,10.1" toggleGroup="$srcVersion" />
+                                    <RadioButton layoutX="136.0" layoutY="220.0" mnemonicParsing="false" text="10.2+" toggleGroup="$srcVersion" />
                                     <Button layoutX="109.0" layoutY="301.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="106.0" text="Test Connection" wrapText="true" />
                                  </children>
                               </AnchorPane>
@@ -54,9 +59,12 @@
                                     <Label layoutX="14.0" layoutY="151.0" text="Password:" />
                                     <TextField layoutX="135.0" layoutY="147.0" />
                                     <Label layoutX="14.0" layoutY="196.0" text="Version:" />
-                                    <RadioButton layoutX="136.0" layoutY="196.0" mnemonicParsing="false" text="10.2+" />
+                                    <RadioButton layoutX="136.0" layoutY="196.0" mnemonicParsing="false" text="10.2+">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="targetVersion" />
+                                       </toggleGroup></RadioButton>
                                     <Button layoutX="109.0" layoutY="301.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="106.0" text="Test Connection" wrapText="true" />
-                                    <RadioButton layoutX="188.0" layoutY="196.0" mnemonicParsing="false" text="12.0" />
+                                    <RadioButton layoutX="188.0" layoutY="196.0" mnemonicParsing="false" text="12.0" toggleGroup="$targetVersion" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -87,7 +95,7 @@
                               </AnchorPane>
                           </content>
                         </TitledPane>
-                        <Button layoutX="504.0" layoutY="156.0" mnemonicParsing="false" text="Test Connection" />
+                        <Button fx:id="dbTestConnection" layoutX="504.0" layoutY="156.0" mnemonicParsing="false" text="Test Connection" />
                         <TabPane layoutX="15.0" layoutY="185.0" prefHeight="322.0" prefWidth="608.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
                             <Tab text="Export">
@@ -127,8 +135,11 @@
                                                       <Label layoutX="14.0" layoutY="74.0" text="CSV Delimiter:" />
                                                       <TextField layoutX="103.0" layoutY="1.0" prefHeight="13.0" prefWidth="324.0" />
                                                       <TextField layoutX="103.0" layoutY="27.0" />
-                                                      <RadioButton layoutX="103.0" layoutY="52.0" mnemonicParsing="false" text="CSV" />
-                                                      <RadioButton layoutX="153.0" layoutY="52.0" mnemonicParsing="false" text="XLSX" />
+                                                      <RadioButton layoutX="103.0" layoutY="52.0" mnemonicParsing="false" text="CSV">
+                                                         <toggleGroup>
+                                                            <ToggleGroup fx:id="outputFileFormat" />
+                                                         </toggleGroup></RadioButton>
+                                                      <RadioButton layoutX="153.0" layoutY="52.0" mnemonicParsing="false" text="XLSX" toggleGroup="$outputFileFormat" />
                                                       <TextField layoutX="103.0" layoutY="70.0" />
                                                       <Button layoutX="441.0" layoutY="1.0" mnemonicParsing="false" text="..." />
                                                       <Button layoutX="282.0" layoutY="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Export" />
@@ -152,18 +163,74 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Export">
+          <Tab text="Extraction">
           	<content>
           		<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="14.0" prefHeight="225.0" prefWidth="313.0" text="untitled">
+                        <TitledPane animated="false" collapsible="false" layoutX="44.0" layoutY="170.0" prefHeight="90.0" prefWidth="527.0" text="select specific type">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <CheckBox layoutX="14.0" layoutY="6.0" mnemonicParsing="false" text="WTPart" />
+                                    <CheckBox layoutX="89.0" layoutY="6.0" mnemonicParsing="false" text="WTDocument" />
+                                    <CheckBox layoutX="199.0" layoutY="6.0" mnemonicParsing="false" text="EPMDocument" />
+                                    <CheckBox layoutX="316.0" layoutY="6.0" mnemonicParsing="false" text="Change Objects" />
+                                    <CheckBox layoutX="14.0" layoutY="32.0" mnemonicParsing="false" text="All Administrative Objects" />
+                                    <CheckBox layoutX="199.0" layoutY="32.0" mnemonicParsing="false" text="WfProcess" />
+                                    <CheckBox layoutX="316.0" layoutY="32.0" mnemonicParsing="false" text="Include Subtypes" />
+                                 </children></AnchorPane>
                           </content>
                         </TitledPane>
+                        <Label layoutX="45.0" layoutY="29.0" text="Type Of Extracttion:" />
+                        <RadioButton layoutX="167.0" layoutY="29.0" mnemonicParsing="false" text="Full Extraction">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="extractionType" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton layoutX="279.0" layoutY="29.0" mnemonicParsing="false" text="Filtered Extraction" toggleGroup="$extractionType" />
+                        <Label layoutX="45.0" layoutY="57.0" text="Input Data Mapping File:" />
+                        <TextField layoutX="189.0" layoutY="53.0" prefHeight="25.0" prefWidth="219.0" />
+                        <Button layoutX="421.0" layoutY="53.0" mnemonicParsing="false" text=".." />
+                        <Label layoutX="45.0" layoutY="139.0" text="Select Types:" />
+                        <TitledPane animated="false" collapsible="false" layoutX="44.0" layoutY="314.0" prefHeight="133.0" prefWidth="527.0" text="Database settings">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="14.0" text="Host" />
+                                    <TextField layoutX="74.0" layoutY="10.0" prefHeight="25.0" prefWidth="441.0" />
+                                    <Label layoutX="13.0" layoutY="45.0" text="Database" />
+                                    <TextField layoutX="74.0" layoutY="41.0" />
+                                    <Label layoutX="13.0" layoutY="77.0" text="Username" />
+                                    <TextField layoutX="74.0" layoutY="73.0" />
+                                    <Label layoutX="286.0" layoutY="45.0" text="Port" />
+                                    <Label layoutX="283.0" layoutY="77.0" text="Password" />
+                                    <TextField layoutX="364.0" layoutY="41.0" prefHeight="25.0" prefWidth="153.0" />
+                                    <TextField layoutX="364.0" layoutY="73.0" prefHeight="25.0" prefWidth="154.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <Label layoutX="45.0" layoutY="277.0" text="Staging Info:" />
+                        <Button layoutX="469.0" layoutY="466.0" mnemonicParsing="false" text="Test Connection" />
+                        <Button layoutX="45.0" layoutY="98.0" mnemonicParsing="false" text="Filter Options" />
                      </children></AnchorPane>
           	</content>
           </Tab>
+            <Tab text="Validation">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="30.0" layoutY="27.0" text="Pre-load Validation Schema:" />
+                        <RadioButton layoutX="195.0" layoutY="27.0" mnemonicParsing="false" text="Create">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="preLoadValidationSchema" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton layoutX="266.0" layoutY="27.0" mnemonicParsing="false" text="Drop &amp; Create" toggleGroup="$preLoadValidationSchema" />
+                        <RadioButton layoutX="382.0" layoutY="27.0" mnemonicParsing="false" text="None" toggleGroup="$preLoadValidationSchema" />
+                        <ListView layoutX="30.0" layoutY="97.0" prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>
