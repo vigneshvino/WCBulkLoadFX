@@ -26,6 +26,8 @@ public class SampleController implements Initializable {
 				System.out.println("Test Connection button is clicked..!!!");
 				Alert alert = new Alert(Alert.AlertType.INFORMATION);
 				alert.setTitle("Button Alert");
+				alert.setHeaderText("Windchill Migration Utility");
+				alert.setContentText("Connection Success..!!!");
 				alert.show();
 			}
 		});
