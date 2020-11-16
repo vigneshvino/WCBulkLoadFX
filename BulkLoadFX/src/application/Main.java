@@ -8,7 +8,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.fxml.FXMLLoader;
 
-
+/****
+ * 
+ * @author vvigneshwaran
+ *
+ */
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
