@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.fxml.FXMLLoader;
 
 /****
- * 
+ * Main class for the application
  * @author vvigneshwaran
  *
  */
