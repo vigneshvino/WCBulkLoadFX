@@ -244,6 +244,18 @@
                   </AnchorPane>
               </content>
             </Tab>
+            <Tab text="Load">
+            <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            </AnchorPane>
+            </content>
+            </Tab>
+            <Tab text="Workflow Migration">
+            <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            </AnchorPane>
+            </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>
