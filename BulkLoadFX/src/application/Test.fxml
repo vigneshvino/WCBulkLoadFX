@@ -210,9 +210,10 @@
                               </AnchorPane>
                            </content>
                         </TitledPane>
-                        <Label layoutX="45.0" layoutY="277.0" text="Staging Info:" />
+                        <Label layoutX="45.0" layoutY="296.0" text="Staging Info:" />
                         <Button layoutX="469.0" layoutY="466.0" mnemonicParsing="false" text="Test Connection" />
                         <Button layoutX="45.0" layoutY="98.0" mnemonicParsing="false" text="Filter Options" />
+                        <Button layoutX="458.0" layoutY="270.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Export" />
                      </children></AnchorPane>
           	</content>
           </Tab>
