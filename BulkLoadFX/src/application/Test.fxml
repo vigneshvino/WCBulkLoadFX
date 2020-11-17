@@ -27,13 +27,13 @@
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
                                     <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="41.0" text="Server:" />
-                                    <TextField layoutX="135.0" layoutY="10.0" />
+                                    <TextField fx:id="srcServerHostName" layoutX="135.0" layoutY="10.0" />
                                     <Label layoutX="14.0" layoutY="57.0" text="Certificate Name:" />
-                                    <TextField layoutX="135.0" layoutY="53.0" />
+                                    <TextField fx:id="srcServerCertName" layoutX="135.0" layoutY="53.0" />
                                     <Label layoutX="14.0" layoutY="105.0" text="Username:" />
-                                    <TextField layoutX="135.0" layoutY="101.0" />
+                                    <TextField fx:id="srcServerUsername" layoutX="135.0" layoutY="101.0" />
                                     <Label layoutX="14.0" layoutY="151.0" text="Password:" />
-                                    <TextField layoutX="135.0" layoutY="147.0" />
+                                    <TextField fx:id="srcServerPassword" layoutX="135.0" layoutY="147.0" />
                                     <Label layoutX="14.0" layoutY="196.0" text="Version:" />
                                     <RadioButton layoutX="135.0" layoutY="196.0" mnemonicParsing="false" text="8.0">
                                        <toggleGroup>
@@ -42,7 +42,7 @@
                                     <RadioButton layoutX="179.0" layoutY="196.0" mnemonicParsing="false" text="9.x" toggleGroup="$srcVersion" />
                                     <RadioButton layoutX="221.0" layoutY="196.0" mnemonicParsing="false" text="10.0,10.1" toggleGroup="$srcVersion" />
                                     <RadioButton layoutX="136.0" layoutY="220.0" mnemonicParsing="false" text="10.2+" toggleGroup="$srcVersion" />
-                                    <Button layoutX="109.0" layoutY="301.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="106.0" text="Test Connection" wrapText="true" />
+                                    <Button fx:id="srcTestConnectionBtn" layoutX="109.0" layoutY="301.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="106.0" text="Test Connection" wrapText="true" />
                                  </children>
                               </AnchorPane>
                            </content>

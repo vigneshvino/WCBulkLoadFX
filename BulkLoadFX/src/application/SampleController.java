@@ -1,6 +1,8 @@
 package application;
 
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -16,6 +18,21 @@ import javafx.scene.control.ToggleGroup;
 public class SampleController implements Initializable {
 	
 
+    @FXML
+    private TextField srcServerHostName;
+
+    @FXML
+    private TextField srcServerCertName;
+
+    @FXML
+    private TextField srcServerUsername;
+
+    @FXML
+    private TextField srcServerPassword;
+
+    @FXML
+    private Button srcTestConnectionBtn;
+    
     @FXML
     private ToggleGroup srcVersion;
 
@@ -52,6 +69,8 @@ public class SampleController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		
+		// Event when onClick of Test DB Connection button
 		dbTestConnection.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -72,6 +91,32 @@ public class SampleController implements Initializable {
 					alert.setContentText("DB Connection success !!!");
 				} else {
 					alert.setContentText("DB Connection Failed.!! Check the input.");
+				}
+				alert.show();
+			}
+		});
+		
+		// Event when onClick of source windchill connection button
+		srcTestConnectionBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				boolean wc_connectionResult = false;
+				System.out.println("Test Connection button on source windchill test clicked");
+				try {
+					wc_connectionResult = LoadWindchillConnection.verifyWindchillConnection(srcServerHostName.getText(), srcServerUsername.getText(), srcServerPassword.getText());
+				} catch (MalformedURLException | RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Alert alert = new Alert(Alert.AlertType.INFORMATION);
+				alert.setTitle("Windchill Connection Test");
+				alert.setHeaderText("Windchill Migration Utility");
+				if(wc_connectionResult) {
+					alert.setContentText("Source Windchill Connection success !!!");
+				} else {
+					alert.setContentText("Source Windchill Connection Failed.!! Check the input.");
 				}
 				alert.show();
 			}
