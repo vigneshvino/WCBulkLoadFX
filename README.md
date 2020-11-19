@@ -8,3 +8,5 @@
 - Can perform full migration or filtered migration.
 
 This repo is an eclipse project. You can clone this repo or can be imported directly into your eclipse.
+
+**NOTE**: Please create your branch from 'development' branch and when you create a merge request keep 'development' branch as target branch. Do not use 'master' branch.
