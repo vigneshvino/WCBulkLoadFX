@@ -20,7 +20,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root,645,550);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("CustomLoaderFX");
+			primaryStage.setTitle("WCMigratorFX v1.0");
 			primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch(Exception e) {
