@@ -6,13 +6,17 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 
 public class SampleController implements Initializable {
@@ -119,6 +123,72 @@ public class SampleController implements Initializable {
 					alert.setContentText("Source Windchill Connection Failed.!! Check the input.");
 				}
 				alert.show();
+			}
+		});
+		
+		//Event when a source version is selected
+		srcVersion.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+				
+				RadioButton btn = (RadioButton) newValue;
+				String sourceVersion = btn.getText();
+				System.out.println(sourceVersion);
+				
+			}
+			
+		});
+		
+		//Event when a target version is selected
+		targetVersion.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+				
+				RadioButton btn = (RadioButton) newValue;
+				String trgtVersion = btn.getText();
+				System.out.println(trgtVersion);
+				
+			}
+		});
+		
+		//Event when a file format is selected
+		outputFileFormat.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+				
+				RadioButton btn = (RadioButton) newValue;
+				String fileFormat = btn.getText();
+				System.out.println(fileFormat);
+				
+			}
+		});
+		
+		//Event when a extraction type is selected
+		extractionType.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+				
+				RadioButton btn = (RadioButton) newValue;
+				String typeOfExtraction = btn.getText();
+				System.out.println(typeOfExtraction);
+				
+			}
+		});
+		
+		//Event when a validation type is selected
+		preLoadValidationSchema.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+				
+				RadioButton btn = (RadioButton) newValue;
+				String typeOfValidation = btn.getText();
+				System.out.println(typeOfValidation);
+				
 			}
 		});
 	}
