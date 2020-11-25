@@ -4,7 +4,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import com.soprasteria.connection.LoadDBConnection;
+import com.soprasteria.connection.LoadWindchillConnection;
+import com.soprasteria.extract.ExtractObjects;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 
@@ -32,6 +39,9 @@ public class SampleController implements Initializable {
 
     @FXML
     private Button srcTestConnectionBtn;
+    
+    @FXML
+    private Button exportButton;
     
     @FXML
     private ToggleGroup srcVersion;
@@ -65,7 +75,31 @@ public class SampleController implements Initializable {
 
     @FXML
     private ToggleGroup preLoadValidationSchema;
+    
+    @FXML
+    private CheckBox CBWTPart;
 
+    @FXML
+    private CheckBox CBWTDocument;
+
+    @FXML
+    private CheckBox CBEPMDocument;
+
+    @FXML
+    private CheckBox CBChangeObjects;
+
+    @FXML
+    private CheckBox CBAdminObj;
+
+    @FXML
+    private CheckBox CBWfProcess;
+
+    @FXML
+    private CheckBox CBIncludeSubtypes;
+    
+   // private ObservableSet<CheckBox> selectedExpObjectsCB = FXCollections.observableSet();
+
+	@SuppressWarnings("unused")
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -119,6 +153,32 @@ public class SampleController implements Initializable {
 					alert.setContentText("Source Windchill Connection Failed.!! Check the input.");
 				}
 				alert.show();
+			}
+		});
+		
+		// Getting values from radio buttons selections
+		String sourceVersionSelected = UIUtilityActions.getSelectedValue(srcVersion);
+		String targetVersionSelected = UIUtilityActions.getSelectedValue(targetVersion);
+		String outputFileFormatSelected = UIUtilityActions.getSelectedValue(outputFileFormat);
+		String extractionTypeSelected = UIUtilityActions.getSelectedValue(extractionType);
+		String preloadValidationSelected = UIUtilityActions.getSelectedValue(preLoadValidationSchema);
+		
+		
+		// Get the selected text boxes in extraction tab under 'select specific type' pane
+		exportButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				List<String> selectedValueList = new ArrayList<String>();
+				selectedValueList = UIUtilityActions.getSelectedExportObjectsList(CBWTPart,CBWTDocument,CBWfProcess,CBIncludeSubtypes,CBEPMDocument,CBChangeObjects,CBAdminObj);
+				System.out.println("Total number of objects selected is "+selectedValueList.size()+" list - "+selectedValueList);
+				try {
+					ExtractObjects.beginExtract(selectedValueList, srcServerHostName, srcServerUsername, srcServerPassword);
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 	}
