@@ -1,4 +1,4 @@
-package application;
+package com.soprasteria.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

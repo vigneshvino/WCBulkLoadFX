@@ -6,6 +6,9 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.soprasteria.connection.LoadDBConnection;
+import com.soprasteria.connection.LoadWindchillConnection;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;

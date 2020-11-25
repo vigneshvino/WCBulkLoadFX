@@ -1,4 +1,4 @@
-package application;
+package com.soprasteria.connection;
 
 import java.net.MalformedURLException;
 import java.net.URL;
