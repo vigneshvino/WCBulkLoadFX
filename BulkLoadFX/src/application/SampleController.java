@@ -70,6 +70,7 @@ public class SampleController implements Initializable {
     @FXML
     private ToggleGroup preLoadValidationSchema;
 
+	@SuppressWarnings("unused")
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -126,71 +127,16 @@ public class SampleController implements Initializable {
 			}
 		});
 		
-		//Event when a source version is selected
-		srcVersion.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-				
-				RadioButton btn = (RadioButton) newValue;
-				String sourceVersion = btn.getText();
-				System.out.println(sourceVersion);
-				
-			}
-			
-		});
+		// Getting values from radio buttons selections
+		String sourceVersionSelected = UIUtilityActions.getSelectedValue(srcVersion);
+		String targetVersionSelected = UIUtilityActions.getSelectedValue(targetVersion);
+		String outputFileFormatSelected = UIUtilityActions.getSelectedValue(outputFileFormat);
+		String extractionTypeSelected = UIUtilityActions.getSelectedValue(extractionType);
+		String preloadValidationSelected = UIUtilityActions.getSelectedValue(preLoadValidationSchema);
 		
-		//Event when a target version is selected
-		targetVersion.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-				
-				RadioButton btn = (RadioButton) newValue;
-				String trgtVersion = btn.getText();
-				System.out.println(trgtVersion);
-				
-			}
-		});
 		
-		//Event when a file format is selected
-		outputFileFormat.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-				
-				RadioButton btn = (RadioButton) newValue;
-				String fileFormat = btn.getText();
-				System.out.println(fileFormat);
-				
-			}
-		});
 		
-		//Event when a extraction type is selected
-		extractionType.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-				
-				RadioButton btn = (RadioButton) newValue;
-				String typeOfExtraction = btn.getText();
-				System.out.println(typeOfExtraction);
-				
-			}
-		});
 		
-		//Event when a validation type is selected
-		preLoadValidationSchema.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-				
-				RadioButton btn = (RadioButton) newValue;
-				String typeOfValidation = btn.getText();
-				System.out.println(typeOfValidation);
-				
-			}
-		});
 	}
 	
 }
