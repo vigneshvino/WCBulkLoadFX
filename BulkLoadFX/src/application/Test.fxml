@@ -172,13 +172,13 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <CheckBox layoutX="14.0" layoutY="6.0" mnemonicParsing="false" text="WTPart" />
-                                    <CheckBox layoutX="89.0" layoutY="6.0" mnemonicParsing="false" text="WTDocument" />
-                                    <CheckBox layoutX="199.0" layoutY="6.0" mnemonicParsing="false" text="EPMDocument" />
-                                    <CheckBox layoutX="316.0" layoutY="6.0" mnemonicParsing="false" text="Change Objects" />
-                                    <CheckBox layoutX="14.0" layoutY="32.0" mnemonicParsing="false" text="All Administrative Objects" />
-                                    <CheckBox layoutX="199.0" layoutY="32.0" mnemonicParsing="false" text="WfProcess" />
-                                    <CheckBox layoutX="316.0" layoutY="32.0" mnemonicParsing="false" text="Include Subtypes" />
+                                    <CheckBox fx:id="CBWTPart" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" text="WTPart" />
+                                    <CheckBox fx:id="CBWTDocument" layoutX="89.0" layoutY="6.0" mnemonicParsing="false" text="WTDocument" />
+                                    <CheckBox fx:id="CBEPMDocument" layoutX="199.0" layoutY="6.0" mnemonicParsing="false" text="EPMDocument" />
+                                    <CheckBox fx:id="CBChangeObjects" layoutX="316.0" layoutY="6.0" mnemonicParsing="false" text="Change Objects" />
+                                    <CheckBox fx:id="CBAdminObj" layoutX="14.0" layoutY="32.0" mnemonicParsing="false" text="All Administrative Objects" />
+                                    <CheckBox fx:id="CBWfProcess" layoutX="199.0" layoutY="32.0" mnemonicParsing="false" text="WfProcess" />
+                                    <CheckBox fx:id="CBIncludeSubtypes" layoutX="316.0" layoutY="32.0" mnemonicParsing="false" text="Include Subtypes" />
                                  </children></AnchorPane>
                           </content>
                         </TitledPane>
@@ -213,7 +213,7 @@
                         <Label layoutX="45.0" layoutY="296.0" text="Staging Info:" />
                         <Button layoutX="469.0" layoutY="466.0" mnemonicParsing="false" text="Test Connection" />
                         <Button layoutX="45.0" layoutY="98.0" mnemonicParsing="false" text="Filter Options" />
-                        <Button layoutX="458.0" layoutY="270.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Export" />
+                        <Button fx:id="exportButton" layoutX="458.0" layoutY="270.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Export" />
                      </children></AnchorPane>
           	</content>
           </Tab>
