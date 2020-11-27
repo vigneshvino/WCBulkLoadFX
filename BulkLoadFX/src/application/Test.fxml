@@ -235,7 +235,7 @@
                               <Button layoutX="250.0" layoutY="32.0" mnemonicParsing="false" text="Choose Folder" />
                            </children>
                         </Pane>
-                        <Pane fx:id="stagedData" layoutX="14.0" layoutY="155.0" prefHeight="301.0" prefWidth="630.0">
+                        <Pane fx:id="stagedData" layoutX="14.0" layoutY="155.0" prefHeight="301.0" prefWidth="630.0" >
                            <children>
                               <Label text="Staged Data" />
                               <CheckBox layoutX="7.0" layoutY="25.0" mnemonicParsing="false" text="Collect Dependencies" />

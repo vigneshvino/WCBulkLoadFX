@@ -21,6 +21,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Pane;
 
 public class SampleController implements Initializable {
 	
@@ -72,6 +73,12 @@ public class SampleController implements Initializable {
 
     @FXML
     private ToggleGroup preLoadValidationSchema;
+    
+	@FXML
+	private Pane userDefinedMapping;
+
+	@FXML
+	private Pane stagedData;
 
 	@SuppressWarnings("unused")
 	@Override
