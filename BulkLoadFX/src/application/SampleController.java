@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -21,7 +22,10 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 
 public class SampleController implements Initializable {
 	
@@ -80,6 +84,26 @@ public class SampleController implements Initializable {
 	@FXML
 	private Pane stagedData;
 
+	@FXML
+	private AnchorPane loadTabAnchorPane;
+	
+	@FXML
+	private TextField dirChooserTextField;
+
+	//ActionEvent for directory chooser in Load tab
+	@FXML
+	private void dirChooserAction(ActionEvent event) {
+		DirectoryChooser chooser = new DirectoryChooser();
+		
+		Stage stage = (Stage)loadTabAnchorPane.getScene().getWindow();
+		
+		File file = chooser.showDialog(stage);
+		
+		if(file!=null) {
+			dirChooserTextField.setText(file.getAbsolutePath());
+		}
+	}
+	
 	@SuppressWarnings("unused")
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -94,7 +118,8 @@ public class SampleController implements Initializable {
 				System.out.println("Test Connection button is clicked..!!!");
 				boolean connectionResult = false;
 				try {
-					connectionResult = LoadDBConnection.verifyDBConnection(dbHostField.getText(),dbServiceName.getText(),dbPort.getText(),dbUsername.getText(),dbPassword.getText());
+					connectionResult = LoadDBConnection.verifyDBConnection(dbHostField.getText(),
+							dbServiceName.getText(),dbPort.getText(),dbUsername.getText(),dbPassword.getText());
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -120,7 +145,8 @@ public class SampleController implements Initializable {
 				boolean wc_connectionResult = false;
 				System.out.println("Test Connection button on source windchill test clicked");
 				try {
-					wc_connectionResult = LoadWindchillConnection.verifyWindchillConnection(srcServerHostName.getText(), srcServerUsername.getText(), srcServerPassword.getText());
+					wc_connectionResult = LoadWindchillConnection.verifyWindchillConnection(srcServerHostName.getText(), 
+							srcServerUsername.getText(), srcServerPassword.getText());
 				} catch (MalformedURLException | RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -161,10 +187,6 @@ public class SampleController implements Initializable {
 		String targetVersionSelected = UIUtilityActions.getSelectedValue(targetVersion);
 		String outputFileFormatSelected = UIUtilityActions.getSelectedValue(outputFileFormat);
 		String extractionTypeSelected = UIUtilityActions.getSelectedValue(extractionType);
-		//String preloadValidationSelected = UIUtilityActions.getSelectedValue(preLoadValidationSchema);
-		
-		
-		
 		
 	}
 	
