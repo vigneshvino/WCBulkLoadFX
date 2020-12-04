@@ -200,12 +200,12 @@ public class SampleController implements Initializable {
 				RadioButton btn = (RadioButton) newValue;
 				String typeOfValidation = btn.getText();
 				if(typeOfValidation.equals("User Defined Mapping")) {
-					userDefinedMapping.setVisible(true);
-					stagedData.setVisible(false);
+					userDefinedMapping.setDisable(false);
+					stagedData.setDisable(true);
 				}
 				else {
-					userDefinedMapping.setVisible(false);
-					stagedData.setVisible(true);
+					userDefinedMapping.setDisable(true);
+					stagedData.setDisable(false);
 				}
 			}
 		});
