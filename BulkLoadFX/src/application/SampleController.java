@@ -156,12 +156,31 @@ public class SampleController implements Initializable {
 			}
 		});
 		
+		// Event when a validation type is selected
+		preLoadValidationSchema.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+
+				RadioButton btn = (RadioButton) newValue;
+				String typeOfValidation = btn.getText();
+				if(typeOfValidation.equals("User Defined Mapping")) {
+					userDefinedMapping.setVisible(true);
+					stagedData.setVisible(false);
+				}
+				else {
+					userDefinedMapping.setVisible(false);
+					stagedData.setVisible(true);
+				}
+			}
+		});
+		
 		// Getting values from radio buttons selections
 		String sourceVersionSelected = UIUtilityActions.getSelectedValue(srcVersion);
 		String targetVersionSelected = UIUtilityActions.getSelectedValue(targetVersion);
 		String outputFileFormatSelected = UIUtilityActions.getSelectedValue(outputFileFormat);
 		String extractionTypeSelected = UIUtilityActions.getSelectedValue(extractionType);
-		String preloadValidationSelected = UIUtilityActions.getSelectedValue(preLoadValidationSchema);
+		//String preloadValidationSelected = UIUtilityActions.getSelectedValue(preLoadValidationSchema);
 		
 		
 		// Get the selected text boxes in extraction tab under 'select specific type' pane
