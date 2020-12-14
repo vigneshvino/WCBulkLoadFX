@@ -18,10 +18,6 @@ public class ExportObject {
 	private static String SOURCE_USER = "";
 	private static String SOURCE_PASS = "";
 	
-//	private static String STAGE_URL = "jdbc:oracle:thin:@localhost:1521:WCBLFX";
-//	private static String STAGE_USER = "wcuser";
-//	private static String STAGE_PASS = "wcuser";
-	
 	private static String TABLENAME = "";
 	private static String FILEPATH = "";
 	private static String FILENAME = "";
