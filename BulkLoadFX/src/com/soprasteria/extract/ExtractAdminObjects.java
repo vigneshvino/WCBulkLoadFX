@@ -1,11 +1,13 @@
 package com.soprasteria.extract;
 
-import java.awt.List;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
+import java.util.List;
 
 import wt.fc.PersistenceHelper;
 import wt.fc.QueryResult;
@@ -21,6 +23,12 @@ import wt.query.QuerySpec;
 import wt.team.TeamTemplate;
 import wt.util.WTException;
 import wt.vc.views.View;
+import wt.lifecycle.State;
+
+/***
+ * @author ayusrivastava
+ * */
+
 
 public class ExtractAdminObjects implements RemoteAccess{
 	
@@ -39,6 +47,7 @@ public class ExtractAdminObjects implements RemoteAccess{
 		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
 		HashMap<String, ArrayList<String>> mapLCStates = new HashMap<String, ArrayList<String>>();
 		
+		
 		try {
 			result = (ArrayList<ArrayList<String>>) rms.invoke("fetchData", "com.soprasteria.extract.ExtractAdminObjects", null, new Class[] {String.class}, new Object[] {});
 			mapLCStates = (HashMap<String, ArrayList<String>>) rms.invoke("fetchLCStates", "com.soprasteria.extract.ExtractAdminObjects", null, new Class[] {String.class}, new Object[] {});
@@ -48,21 +57,25 @@ public class ExtractAdminObjects implements RemoteAccess{
 		
 		System.out.println("----**USERS**-------------------------");
 		System.out.println(result.get(0));
+		CreateXMLFiles.createUserXml(result.get(0));
 		System.out.println("--------------------------------------");
 		System.out.println();
 		System.out.println("----**TEAM_TEMPLATES**------------------");
 		System.out.println(result.get(1));
+		CreateXMLFiles.createTeamTemplateXml(result.get(1));
 		System.out.println("----------------------------------------");
 		System.out.println();
 		System.out.println("----**ORAGNIZATIONS**------------------");
 		System.out.println(result.get(2));
 		System.out.println("----------------------------------------");
 		System.out.println();
-		System.out.println("----**TABLE_VIEWS**------------------");
+		System.out.println("----**VIEWS_TEMPLATES**------------------");
 		System.out.println(result.get(3));
+		CreateXMLFiles.createViewXml(result.get(3));;
 		System.out.println("----------------------------------------");
 		System.out.println();
 		System.out.println("----**LIFE_CYCLE && STATES**------------------");
+		CreateXMLFiles.createLifeCycleXml(mapLCStates);
 		
 		for (Map.Entry<String, ArrayList<String>> lcEntry : mapLCStates.entrySet()) {
 			String lcName = lcEntry.getKey();
@@ -76,11 +89,18 @@ public class ExtractAdminObjects implements RemoteAccess{
 		
 	}
 	
-	public static ArrayList<ArrayList<String>> fetchData() throws WTException {
+	/***
+	 * Retrieves Users, Team Templates, Organizations, Views 
+	 *  @param
+	 *  @return fullData
+	 *  @throws WTException
+	 * */
+	
+	public static List<List<String>> fetchData() throws WTException {
+
+		List<List<String>> fullData = new ArrayList<List<String>>();
 		
-		ArrayList<ArrayList<String>> fullData = new ArrayList<ArrayList<String>>();
-		
-		ArrayList<WTUser> user = new ArrayList<WTUser>();
+		List<WTUser> user = new ArrayList<WTUser>();
 		ArrayList<String> username = new ArrayList<String>();
 		
 		QuerySpec qs1 = new QuerySpec(WTUser.class);
@@ -95,8 +115,8 @@ public class ExtractAdminObjects implements RemoteAccess{
 		}
 		
 		fullData.add(username);
-		
-		ArrayList<TeamTemplate> teamTemplate = new ArrayList<TeamTemplate>();
+		 
+		List<TeamTemplate> teamTemplate = new ArrayList<TeamTemplate>();
 		ArrayList<String> teamTemplateName = new ArrayList<String>();
 		
 		QuerySpec qs2 = new QuerySpec(TeamTemplate.class);
@@ -112,7 +132,7 @@ public class ExtractAdminObjects implements RemoteAccess{
 		
 		fullData.add(teamTemplateName);
 		
-		ArrayList<WTOrganization> orgs = new ArrayList<WTOrganization>();
+		List<WTOrganization> orgs = new ArrayList<WTOrganization>();
 		ArrayList<String> orgName =  new ArrayList<String>();
 		
 		QuerySpec qs3 =  new QuerySpec(WTOrganization.class);
@@ -128,7 +148,7 @@ public class ExtractAdminObjects implements RemoteAccess{
 		
 		fullData.add(orgName);
 		
-		ArrayList<View> view = new ArrayList<View>();
+		List<View> view = new ArrayList<View>();
 		ArrayList<String> viewName = new ArrayList<String>();
 		
 		QuerySpec qs5 = new QuerySpec(View.class);
@@ -145,19 +165,22 @@ public class ExtractAdminObjects implements RemoteAccess{
 		fullData.add(viewName);
 		
 		return fullData;
+		
 	}
 	
+	/***
+	 * Retrieves LifeCycle Templates and their states 
+	 *  @param
+	 *  @return lcStates
+	 *  @throws WTException
+	 * */
 	
 	public static HashMap<String, ArrayList<String>> fetchLCStates() throws WTException {
-			
-			HashMap<String, ArrayList<String>> lcStates = new HashMap<String, ArrayList<String>>();
-			
-			ArrayList<LifeCycleTemplate> lcTemplate = new ArrayList<LifeCycleTemplate>();
-/*			String lcTemplateName = null;
-			Vector<LifeCycleState> states = new Vector<LifeCycleState>();
-			ArrayList<String> states = new ArrayList<String>();
-	 
-*/
+		
+		HashMap<String, ArrayList<String>> lcStates = new HashMap<String, ArrayList<String>>();
+		
+		List<LifeCycleTemplate> lcTemplate = new ArrayList<LifeCycleTemplate>();
+
 		QuerySpec qs4 = new QuerySpec(LifeCycleTemplate.class);
 		QueryResult lcQueryResult = PersistenceHelper.manager.find(qs4);
 		
@@ -165,35 +188,50 @@ public class ExtractAdminObjects implements RemoteAccess{
 			lcTemplate.add((LifeCycleTemplate) lcQueryResult.nextElement());
 		}
 		
-/*		ListIterator<LifeCycleTemplate> lcIterator = lcTemplate.listIterator();
-			
+/*		
+  		String lcTemplateName = null;
+		Vector<LifeCycleState> states = new Vector<LifeCycleState>();
+		ArrayList<String> states = new ArrayList<String>();
+		ListIterator<LifeCycleTemplate> lcIterator = lcTemplate.listIterator();
+		
 		while(lcIterator.hasNext()) {
-		lcTemplateName = lcIterator.next().getName();
-		System.out.println("LifeCycle : " + lcTemplateName);
-		states.addAll(LifeCycleHelper.service.findStates(lcIterator.next()));
-		System.out.println("States : " + states.toString());
-		lcStates.put(lcTemplateName, states.toArray());
-		}
+			lcTemplateName = lcIterator.next().getName();
+			System.out.println("LifeCycle : " + lcTemplateName);
+			states.addAll(LifeCycleHelper.service.findStates(lcIterator.next()));
+			System.out.println("States : " + states.toString());
+			lcStates.put(lcTemplateName, states.toArray());
+		} 
 */
+		String lcTemplateName = "";
+		Vector<State> states = new Vector<State>();
+		
 		
 		for (int i=0; i<lcTemplate.size(); i++) {
 			
-			String lcTemplateName = null;
-			ArrayList<String> states = new ArrayList<String>();
+			lcTemplateName = null;
+			states.clear();
+			ArrayList<String> allstates = new ArrayList<String>();
+			
 			lcTemplateName = lcTemplate.get(i).getName();
 			states.addAll(LifeCycleHelper.service.findStates(lcTemplate.get(i)));
+						
+			for (int j=0;j<states.size();j++) {
+				System.out.println("LifeCycle_Template : " + lcTemplateName + "\tStates : " + states.get(j).toString());
+				allstates.add(states.get(j).toString());
+			}
 			
-			System.out.println("LifeCycle_Name : " + lcTemplateName + " , " + "LifeCycle_States : " + states);
-			lcStates.put(lcTemplateName, states);
+			lcStates.put(lcTemplateName, allstates);
 		}
 		
 		
 		for (Map.Entry<String, ArrayList<String>> lcEntry : lcStates.entrySet()) {
 			String lcName = lcEntry.getKey();
 			ArrayList<String> lcstate = lcEntry.getValue();
-			System.out.println("LifeCycle_Template : " + lcName + " , " + "LifeCycle_States : " + lcstate);
+//			System.out.println("LifeCycle_Template : " + lcName + " , " + "LifeCycle_States : " + lcstate);
 		}
 		
-		return lcStates;	
+		return lcStates;
+		
 	}
+
 }

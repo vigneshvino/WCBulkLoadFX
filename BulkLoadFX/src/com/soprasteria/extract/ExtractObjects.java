@@ -19,6 +19,11 @@ public class ExtractObjects {
 				String typeName = "wt.part.WTPart";
 				ExtractWTPart.initialize(typeName,sourceServer,username,password);
 			}
+			
+			if(objName.equalsIgnoreCase("All Administrative Objects")) {
+				// ALL Administrative Object extraction process begins here
+				ExtractAdminObjects.initialize(sourceServer, username, password);
+			}
 		}
 	}
 

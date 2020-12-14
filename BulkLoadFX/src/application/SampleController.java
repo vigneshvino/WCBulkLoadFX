@@ -1,5 +1,7 @@
 package application;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -8,10 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.apache.bcel.generic.IFNULL;
+import org.eclipse.swt.internal.image.FileFormat;
+
 import com.soprasteria.connection.LoadDBConnection;
 import com.soprasteria.connection.LoadWindchillConnection;
+import com.soprasteria.export.ExportObject;
 import com.soprasteria.extract.ExtractObjects;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,8 +27,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
+import javafx.stage.DirectoryChooser;
 
 public class SampleController implements Initializable {
 	
@@ -66,6 +78,30 @@ public class SampleController implements Initializable {
 
     @FXML
     private Button dbTestConnection;
+    
+    @FXML
+    private Button exportdbButton;
+    
+    @FXML
+    private TextField tableName;
+    
+    @FXML
+    private HBox hboxpane;
+    
+    @FXML
+    private TextField saveDirectory;
+    
+    @FXML
+    private TextField filename;
+    
+    @FXML
+    private RadioButton csvButton;
+    
+    @FXML
+    private RadioButton xlsxButton;
+    
+    @FXML
+    private TextField csvdelimiter;
 
     @FXML
     private ToggleGroup outputFileFormat;
@@ -98,6 +134,20 @@ public class SampleController implements Initializable {
     private CheckBox CBIncludeSubtypes;
     
    // private ObservableSet<CheckBox> selectedExpObjectsCB = FXCollections.observableSet();
+    
+	@FXML
+	public void handleClick() {
+		DirectoryChooser dirChooser = new DirectoryChooser();
+		File dir = dirChooser.showDialog(hboxpane.getScene().getWindow());
+		if (dir != null) {
+			System.out.println("Path : "+dir.getPath());
+			saveDirectory.setText(dir.getPath());
+		}
+		else {
+			System.out.println("Chooser was closed!!");
+		}
+		
+	}
 
 	@SuppressWarnings("unused")
 	@Override
@@ -128,6 +178,38 @@ public class SampleController implements Initializable {
 				}
 				alert.show();
 			}
+		});
+		
+		
+
+		
+		
+		// Event when onClick of Export button
+		exportdbButton.setOnAction(new EventHandler<ActionEvent>() {
+						
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+			
+				RadioButton fileformat = (RadioButton) outputFileFormat.getSelectedToggle();
+				
+				System.out.println("Export Button is Clicked!!");
+				
+				try {
+					ExportObject.initializeValues(dbHostField.getText(), dbServiceName.getText(), dbPort.getText(), 
+							dbUsername.getText(), dbPassword.getText(), tableName.getText(), saveDirectory.getText(), 
+							filename.getText(), fileformat.getText(),csvdelimiter.getText());
+					
+					ExportObject.exportObj();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Ohh! SOmething went wrong : " + e.getMessage());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Ohh! SOmething went wrong : " + e.getMessage());
+				}
+			}
+			
 		});
 		
 		// Event when onClick of source windchill connection button
