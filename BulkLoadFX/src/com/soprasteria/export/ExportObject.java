@@ -66,6 +66,18 @@ public class ExportObject {
 			
 			int columnSize = resultMetaData.getColumnCount();
 			
+			for (int i=1;i<=columnSize;i++) {
+				String columname = resultMetaData.getColumnName(i);
+				
+				if(i<=columnSize-1) {
+					csvWriter.append(columname + DELIMITER);
+				}
+				else {
+					csvWriter.append(columname);
+					csvWriter.append("\n");
+				}
+			}
+			
 			while(result.next()) {
 				for(int i=1; i<=columnSize; i++) {
 					
