@@ -17,6 +17,7 @@ import com.soprasteria.connection.LoadDBConnection;
 import com.soprasteria.connection.LoadWindchillConnection;
 import com.soprasteria.export.ExportObject;
 import com.soprasteria.extract.ExtractObjects;
+import com.soprasteria.newFeature.DatabasePreferences;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -153,6 +154,19 @@ public class SampleController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		File file = new File("D:\\WCBulkLoadFX_POC\\dbtabconfig.xml");
+		if(file.exists()) {
+			ExportObject expObj = new ExportObject();
+			DatabasePreferences dbPrefs = expObj.getDBTabPreferences(file);
+			
+			dbHostField.setText(dbPrefs.getHost());
+			dbServiceName.setText(dbPrefs.getDatabase());
+			dbPort.setText(dbPrefs.getPort());
+			dbUsername.setText(dbPrefs.getUsername());
+			dbPassword.setText(dbPrefs.getPassword());
+		}else {
+			System.out.println("The Preference file not found!!");
+		}
 		
 		// Event when onClick of Test DB Connection button
 		dbTestConnection.setOnAction(new EventHandler<ActionEvent>() {
@@ -208,6 +222,7 @@ public class SampleController implements Initializable {
 					// TODO Auto-generated catch block
 					System.out.println("Ohh! SOmething went wrong : " + e.getMessage());
 				}
+				
 			}
 			
 		});

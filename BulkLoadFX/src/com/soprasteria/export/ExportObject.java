@@ -1,6 +1,10 @@
 package com.soprasteria.export;
 
+import java.beans.XMLDecoder;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Blob;
@@ -11,10 +15,15 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.soprasteria.newFeature.DatabasePreferences;
+
 
 public class ExportObject {
 	
 	private static String SOURCE_URL = "";
+	private static String DB_HOST = "";
+	private static String DB_NAME = "";
+	private static String DB_PORT = "";
 	private static String SOURCE_USER = "";
 	private static String SOURCE_PASS = "";
 	
@@ -33,7 +42,10 @@ public class ExportObject {
 	public static void initializeValues(String dbHost, String dbName, String dbPort, String username, 
 			String password, String tableName, String filepath, String filename, String fileformat,String delimiter) {
 		
-		SOURCE_URL="jdbc:oracle:thin:@"+dbHost+":"+dbPort+":"+dbName;
+		DB_HOST=dbHost;
+		DB_NAME=dbName;
+		DB_PORT=dbPort;
+		SOURCE_URL="jdbc:oracle:thin:@"+DB_HOST+":"+DB_PORT+":"+DB_NAME;
 		SOURCE_USER=username;
 		SOURCE_PASS=password;
 		TABLENAME = tableName.toUpperCase();
@@ -129,5 +141,38 @@ public class ExportObject {
 			System.out.println("Ohh! Some error occured while creating the folder : " + e.getMessage());
 			e.printStackTrace();
 		}
+	}
+	
+	public void setDBTabPreferences() {
+		DatabasePreferences dbPrefs = new DatabasePreferences();
+		try {
+			dbPrefs.setHost(DB_HOST);
+			dbPrefs.setDatabase(DB_NAME);
+			dbPrefs.setPort(DB_PORT);
+			dbPrefs.setUsername(SOURCE_USER);
+			dbPrefs.setPassword(SOURCE_PASS);
+			
+			dbPrefs.setDBConfig(dbPrefs);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public DatabasePreferences getDBTabPreferences(File file) {
+//		File file = new File("D:\\\\WCBulkLoadFX_POC\\\\dbtabconfig.xml");
+		DatabasePreferences dbPrefs = null;
+		try {
+			FileInputStream fin = new FileInputStream(file);
+			XMLDecoder x = new XMLDecoder(new BufferedInputStream(fin));
+			dbPrefs = (DatabasePreferences) x.readObject();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("No file found to initialize the tabs!!");
+			e.printStackTrace();
+		}
+		return dbPrefs;
 	}
 }
