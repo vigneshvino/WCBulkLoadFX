@@ -1,6 +1,10 @@
 package application;
 
+import java.beans.XMLDecoder;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,7 +21,8 @@ import com.soprasteria.connection.LoadDBConnection;
 import com.soprasteria.connection.LoadWindchillConnection;
 import com.soprasteria.export.ExportObject;
 import com.soprasteria.extract.ExtractObjects;
-import com.soprasteria.newFeature.DatabasePreferences;
+import com.soprasteria.newFeature.AppPreferences;
+import com.soprasteria.newFeature.SaveAppPreferences;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,6 +33,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
@@ -37,6 +43,9 @@ import javafx.stage.DirectoryChooser;
 
 public class SampleController implements Initializable {
 	
+
+    @FXML
+    private HBox hboxpane;
 
     @FXML
     private TextField srcServerHostName;
@@ -51,68 +60,77 @@ public class SampleController implements Initializable {
     private TextField srcServerPassword;
 
     @FXML
-    private Button srcTestConnectionBtn;
-    
-    @FXML
-    private Button exportButton;
-    
-    @FXML
     private ToggleGroup srcVersion;
+
+    @FXML
+    private Button srcTestConnectionBtn;
 
     @FXML
     private ToggleGroup targetVersion;
 
     @FXML
     private TextField dbHostField;
-    
+
     @FXML
     private TextField dbServiceName;
 
     @FXML
     private TextField dbUsername;
+    
+    @FXML
+    private RadioButton firstButton;
+    
+    @FXML
+    private RadioButton secondButton;
+    
+    @FXML
+    private RadioButton thirdButton;
 
     @FXML
     private TextField dbPort;
 
     @FXML
-    private TextField dbPassword;
+    private PasswordField dbPassword;
 
     @FXML
     private Button dbTestConnection;
-    
-    @FXML
-    private Button exportdbButton;
-    
+
     @FXML
     private TextField tableName;
-    
+
     @FXML
-    private HBox hboxpane;
-    
+    private CheckBox distinct;
+
+    @FXML
+    private CheckBox where;
+
+    @FXML
+    private TextField whereValue;
+
+    @FXML
+    private TextField distinctValue;
+
     @FXML
     private TextField saveDirectory;
-    
+
     @FXML
     private TextField filename;
-    
+
     @FXML
     private RadioButton csvButton;
-    
-    @FXML
-    private RadioButton xlsxButton;
-    
-    @FXML
-    private TextField csvdelimiter;
 
     @FXML
     private ToggleGroup outputFileFormat;
 
     @FXML
-    private ToggleGroup extractionType;
+    private RadioButton xlsxButton;
 
     @FXML
-    private ToggleGroup preLoadValidationSchema;
-    
+    private TextField csvdelimiter;
+
+    @FXML
+    private Button exportdbButton;
+
     @FXML
     private CheckBox CBWTPart;
 
@@ -133,8 +151,45 @@ public class SampleController implements Initializable {
 
     @FXML
     private CheckBox CBIncludeSubtypes;
+
+    @FXML
+    private ToggleGroup extractionType;
+
+    @FXML
+    private Button exportButton;
+
+    @FXML
+    private ToggleGroup preLoadValidationSchema;
     
    // private ObservableSet<CheckBox> selectedExpObjectsCB = FXCollections.observableSet();
+    
+    
+    @FXML
+    void enableDistinctField(ActionEvent event) {
+    	if(distinct.isSelected()) {
+    		distinctValue.setDisable(false);
+    	}else {
+    		distinctValue.setDisable(true);
+    	}
+    }
+    
+    @FXML
+    void enableWhereField(ActionEvent event) {
+    	if(where.isSelected()) {
+    		whereValue.setDisable(false);
+    	}else {
+    		whereValue.setDisable(true);
+    	}
+    }
+    
+    @FXML
+    void enableDelimiterField(ActionEvent event) {
+    	if(csvButton.isSelected()) {
+    		csvdelimiter.setDisable(false);
+    	}else {
+    		csvdelimiter.setDisable(true);
+    	}
+    }
     
 	@FXML
 	public void handleClick() {
@@ -154,19 +209,42 @@ public class SampleController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		File file = new File("D:\\WCBulkLoadFX_POC\\dbtabconfig.xml");
-		if(file.exists()) {
-			ExportObject expObj = new ExportObject();
-			DatabasePreferences dbPrefs = expObj.getDBTabPreferences(file);
+		
+		File file = new File("D:\\WCBulkLoadFX_POC\\appconfig.xml");
+		AppPreferences appPrefs = null;
+		try {
+			FileInputStream fin = new FileInputStream(file);
+			XMLDecoder x = new XMLDecoder(new BufferedInputStream(fin));
+			appPrefs = (AppPreferences) x.readObject();
 			
-			dbHostField.setText(dbPrefs.getHost());
-			dbServiceName.setText(dbPrefs.getDatabase());
-			dbPort.setText(dbPrefs.getPort());
-			dbUsername.setText(dbPrefs.getUsername());
-			dbPassword.setText(dbPrefs.getPassword());
-		}else {
-			System.out.println("The Preference file not found!!");
+			srcServerHostName.setText(appPrefs.getSrcServerName());
+			srcServerCertName.setText(appPrefs.getSrcServerCertName());
+			srcServerUsername.setText(appPrefs.getSrcServerUsername());
+			srcServerPassword.setText(appPrefs.getSrcServerPassword());
+			
+			if ((appPrefs.getSrcVersion()).equals(firstButton.getText())) {
+				firstButton.setSelected(true);
+			}else if ((appPrefs.getSrcVersion()).equals(secondButton.getText())) {
+				secondButton.setSelected(true);
+			}else if ((appPrefs.getSrcVersion()).equals(thirdButton.getText())) {
+				thirdButton.setSelected(true);
+			}
+			
+			
+			dbHostField.setText(appPrefs.getHost());
+			dbServiceName.setText(appPrefs.getDatabase());
+			dbPort.setText(appPrefs.getPort());
+			dbUsername.setText(appPrefs.getUsername());
+			dbPassword.setText(appPrefs.getPassword());
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("The Preference file not found!!!!");
+//			e.printStackTrace();
 		}
+		
+		distinctValue.setDisable(true);
+		whereValue.setDisable(true);
 		
 		// Event when onClick of Test DB Connection button
 		dbTestConnection.setOnAction(new EventHandler<ActionEvent>() {
@@ -211,10 +289,14 @@ public class SampleController implements Initializable {
 				
 				try {
 					ExportObject.initializeValues(dbHostField.getText(), dbServiceName.getText(), dbPort.getText(), 
-							dbUsername.getText(), dbPassword.getText(), tableName.getText(), saveDirectory.getText(), 
-							filename.getText(), fileformat.getText(),csvdelimiter.getText());
+							dbUsername.getText(), dbPassword.getText(), tableName.getText(), distinct,
+							distinctValue.getText(), where, whereValue.getText(), saveDirectory.getText(), 
+							filename.getText(), fileformat.getText(), csvdelimiter.getText());
 					
 					ExportObject.exportObj();
+					
+					SaveAppPreferences.saveDBTabPreferences(dbHostField.getText(), dbServiceName.getText(), 
+							dbPort.getText(), dbUsername.getText(), dbPassword.getText());
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					System.out.println("Ohh! SOmething went wrong : " + e.getMessage());
@@ -246,11 +328,16 @@ public class SampleController implements Initializable {
 				alert.setHeaderText("Windchill Migration Utility");
 				if(wc_connectionResult) {
 					alert.setContentText("Source Windchill Connection success !!!");
+					SaveAppPreferences.saveWCTabPreferences(srcServerHostName.getText(), 
+							srcServerCertName.getText(), srcServerUsername.getText(), srcServerPassword.getText(), 
+							srcVersion.getSelectedToggle());
 				} else {
 					alert.setContentText("Source Windchill Connection Failed.!! Check the input.");
 				}
 				alert.show();
 			}
+			
+			
 		});
 		
 		// Getting values from radio buttons selections

@@ -13,10 +13,16 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 
-import com.soprasteria.newFeature.DatabasePreferences;
+import com.soprasteria.newFeature.AppPreferences;
 
+import javafx.scene.control.CheckBox;
+
+/**
+ * @author ayusrivastava
+ * */
 
 public class ExportObject {
 	
@@ -27,6 +33,10 @@ public class ExportObject {
 	private static String SOURCE_USER = "";
 	private static String SOURCE_PASS = "";
 	
+	private static CheckBox DISTINCT;
+	private static String DISTINCT_VALUE = "";
+	private static CheckBox WHERE;
+	private static String WHERE_VALUE = "";
 	private static String TABLENAME = "";
 	private static String FILEPATH = "";
 	private static String FILENAME = "";
@@ -40,7 +50,8 @@ public class ExportObject {
 	 * @param dbHost, dbName, dbPort, username, password, tableName, filepath, filename, fileformat, delimiter
 	 * */
 	public static void initializeValues(String dbHost, String dbName, String dbPort, String username, 
-			String password, String tableName, String filepath, String filename, String fileformat,String delimiter) {
+			String password, String tableName, CheckBox distinct, String distinctValue, CheckBox where, 
+			String whereValue, String filepath, String filename, String fileformat,String delimiter) {
 		
 		DB_HOST=dbHost;
 		DB_NAME=dbName;
@@ -48,6 +59,10 @@ public class ExportObject {
 		SOURCE_URL="jdbc:oracle:thin:@"+DB_HOST+":"+DB_PORT+":"+DB_NAME;
 		SOURCE_USER=username;
 		SOURCE_PASS=password;
+		DISTINCT=distinct;
+		DISTINCT_VALUE=distinctValue;
+		WHERE=where;
+		WHERE_VALUE=whereValue;
 		TABLENAME = tableName.toUpperCase();
 		FILEPATH=filepath;
 		FILENAME=filename;
@@ -59,9 +74,9 @@ public class ExportObject {
 	 * Gets all the data from the source database and writes it to one a file*/
 	public static void exportObj()  throws SQLException, IOException{
 		
+		String queryStatement = "";
 		
 		try {
-			
 			File fs = new File(FILEPATH + "\\" +FILENAME + "."+FILEFORMAT);
 //			if(!fs.getParentFile().isDirectory()) {
 //				fs.getParentFile().mkdir();
@@ -72,8 +87,18 @@ public class ExportObject {
 			
 			Connection connect = DriverManager.getConnection(SOURCE_URL, SOURCE_USER, SOURCE_PASS);
 			
+			if (DISTINCT.isSelected() && WHERE.isSelected()) {
+				queryStatement = "SELECT DISTINCT "+DISTINCT_VALUE+" FROM "+TABLENAME+" WHERE "+WHERE_VALUE;
+			}else if(DISTINCT.isSelected()) {
+				queryStatement = "SELECT DISTINCT ("+DISTINCT_VALUE+") FROM "+TABLENAME;
+			}else if (WHERE.isSelected()) {
+				queryStatement = "SELECT * FROM "+TABLENAME+" WHERE "+WHERE_VALUE;
+			}else {
+				queryStatement = "SELECT * FROM " + TABLENAME;
+			}
+			System.out.println("SQL Query : " + queryStatement);
 			Statement stmt = connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			ResultSet result = stmt.executeQuery("SELECT * FROM "+TABLENAME);
+			ResultSet result = stmt.executeQuery(queryStatement);
 			ResultSetMetaData resultMetaData = result.getMetaData();
 			
 			int columnSize = resultMetaData.getColumnCount();
@@ -134,6 +159,11 @@ public class ExportObject {
 			csvWriter.flush();
 			csvWriter.close();
 			records = 0;
+		}catch (SQLSyntaxErrorException e) {
+			// TODO: handle exception
+			System.out.println("Ohh, There is some issue with the Query Syntax!!!");
+			System.out.println("Check the SQL Query Again : " + queryStatement);
+			System.out.println("Error : " + e.getMessage());
 		}catch(SQLException e) {
 			System.out.println("Ohh, some error occured : " + e.getSQLState() +" "+ e.getMessage());
 			e.printStackTrace();
@@ -143,36 +173,4 @@ public class ExportObject {
 		}
 	}
 	
-	public void setDBTabPreferences() {
-		DatabasePreferences dbPrefs = new DatabasePreferences();
-		try {
-			dbPrefs.setHost(DB_HOST);
-			dbPrefs.setDatabase(DB_NAME);
-			dbPrefs.setPort(DB_PORT);
-			dbPrefs.setUsername(SOURCE_USER);
-			dbPrefs.setPassword(SOURCE_PASS);
-			
-			dbPrefs.setDBConfig(dbPrefs);
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public DatabasePreferences getDBTabPreferences(File file) {
-//		File file = new File("D:\\\\WCBulkLoadFX_POC\\\\dbtabconfig.xml");
-		DatabasePreferences dbPrefs = null;
-		try {
-			FileInputStream fin = new FileInputStream(file);
-			XMLDecoder x = new XMLDecoder(new BufferedInputStream(fin));
-			dbPrefs = (DatabasePreferences) x.readObject();
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("No file found to initialize the tabs!!");
-			e.printStackTrace();
-		}
-		return dbPrefs;
-	}
 }

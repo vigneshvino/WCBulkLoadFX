@@ -33,14 +33,14 @@ import wt.lifecycle.State;
 public class ExtractAdminObjects implements RemoteAccess{
 	
 	public static void initialize(String sourceServer, String username, String password) throws MalformedURLException {
-		
+	
 		String serviceName = "MethodServer";
 		if(!sourceServer.endsWith("/")) {
 			sourceServer = sourceServer + "/";
 		}
-		
+		System.out.println(sourceServer);
 		URL wc_url = new URL(sourceServer);
-		RemoteMethodServer rms = RemoteMethodServer.getInstance(wc_url, serviceName);
+		RemoteMethodServer rms = RemoteMethodServer.getInstance(wc_url,serviceName);
 		rms.setUserName(username);
 		rms.setPassword(password);
 		

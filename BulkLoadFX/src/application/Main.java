@@ -4,7 +4,9 @@ import java.util.Optional;
 
 import org.springframework.context.event.EventListener;
 
+import com.soprasteria.connection.LoadWindchillConnection;
 import com.soprasteria.export.ExportObject;
+import com.soprasteria.newFeature.SaveAppPreferences;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -62,8 +64,9 @@ public class Main extends Application {
 		Optional<ButtonType> option = confirmAlert.showAndWait();
 		
 		if (option.get() == ButtonType.YES) {
-			ExportObject exportObj = new ExportObject();
-			exportObj.setDBTabPreferences();
+			SaveAppPreferences saveAppPrefs = new SaveAppPreferences();
+			saveAppPrefs.setAppPreferences();
+			
 			System.out.println("Config file created!!");
 			
 		} else if (option.get() == ButtonType.NO) {

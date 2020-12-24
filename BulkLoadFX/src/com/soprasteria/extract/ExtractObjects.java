@@ -3,6 +3,8 @@ package com.soprasteria.extract;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import com.soprasteria.extract.ExtractAdminObjects;
+
 import javafx.scene.control.TextField;
 
 public class ExtractObjects {

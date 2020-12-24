@@ -90,6 +90,5 @@
 	<classpathentry kind="lib" path="D:/ptc/Windchill-11.1/Windchill/codebase/WEB-INF/lib/wc3rdpartylibs.jar"/>
 	<classpathentry kind="lib" path="D:/ptc/Windchill-11.1/Windchill/codebase/WEB-INF/lib/wncWeb.jar"/>
 	<classpathentry kind="lib" path="D:/ptc/Windchill-11.1/Windchill/codebase"/>
-	<classpathentry kind="lib" path="D:/WCBulkLoadFX_POC/gson-2.8.6.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

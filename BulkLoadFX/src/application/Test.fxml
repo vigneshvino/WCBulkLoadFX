@@ -39,9 +39,9 @@
                                        <toggleGroup>
                                           <ToggleGroup fx:id="srcVersion" />
                                        </toggleGroup></RadioButton>
-                                    <RadioButton layoutX="179.0" layoutY="196.0" mnemonicParsing="false" text="9.x" toggleGroup="$srcVersion" />
-                                    <RadioButton layoutX="221.0" layoutY="196.0" mnemonicParsing="false" text="10.0,10.1" toggleGroup="$srcVersion" />
-                                    <RadioButton layoutX="136.0" layoutY="220.0" mnemonicParsing="false" text="10.2+" toggleGroup="$srcVersion" />
+                                    <RadioButton fx:id="firstButton" layoutX="179.0" layoutY="196.0" mnemonicParsing="false" text="9.x" toggleGroup="$srcVersion" />
+                                    <RadioButton fx:id="secondButton" layoutX="221.0" layoutY="196.0" mnemonicParsing="false" text="10.0,10.1" toggleGroup="$srcVersion" />
+                                    <RadioButton fx:id="thirdButton" layoutX="136.0" layoutY="220.0" mnemonicParsing="false" text="10.2+" toggleGroup="$srcVersion" />
                                     <Button fx:id="srcTestConnectionBtn" layoutX="109.0" layoutY="301.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="106.0" text="Test Connection" wrapText="true" />
                                  </children>
                               </AnchorPane>
@@ -118,10 +118,11 @@
                                             <content>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                    <children>
-                                                      <CheckBox layoutX="21.0" layoutY="7.0" mnemonicParsing="false" text="DISTINCT" />
-                                                      <CheckBox layoutX="108.0" layoutY="7.0" mnemonicParsing="false" text="WHERE" />
-                                                      <TextField layoutX="176.0" layoutY="3.0" prefHeight="25.0" prefWidth="231.0" />
-                                                      <Button layoutX="429.0" layoutY="3.0" mnemonicParsing="false" text="Info" />
+                                                      <CheckBox fx:id="distinct" layoutX="7.0" layoutY="7.0" mnemonicParsing="false" onAction="#enableDistinctField" text="DISTINCT" />
+                                                      <CheckBox fx:id="where" layoutX="233.0" layoutY="7.0" mnemonicParsing="false" onAction="#enableWhereField" text="WHERE" />
+                                                      <TextField fx:id="whereValue" layoutX="313.0" layoutY="2.0" prefHeight="25.0" prefWidth="125.0" />
+                                                      <Button layoutX="476.0" layoutY="3.0" mnemonicParsing="false" text="Info" />
+                                                      <TextField fx:id="distinctValue" layoutX="93.0" layoutY="3.0" prefHeight="25.0" prefWidth="125.0" />
                                                    </children>
                                                 </AnchorPane>
                                             </content>
@@ -136,11 +137,11 @@
                                                       <Label layoutX="14.0" layoutY="74.0" text="CSV Delimiter:" />
                                                       <TextField fx:id="saveDirectory" layoutX="103.0" layoutY="1.0" prefHeight="13.0" prefWidth="324.0" />
                                                       <TextField fx:id="filename" layoutX="103.0" layoutY="27.0" />
-                                                      <RadioButton fx:id ="csvButton" layoutX="103.0" layoutY="52.0" mnemonicParsing="false" text="CSV">
+                                                      <RadioButton fx:id="csvButton" layoutX="103.0" layoutY="52.0" mnemonicParsing="false" onAction="#enableDelimiterField" text="CSV">
                                                          <toggleGroup>
                                                             <ToggleGroup fx:id="outputFileFormat" />
                                                          </toggleGroup></RadioButton>
-                                                      <RadioButton fx:id="xlsxButton" layoutX="153.0" layoutY="52.0" mnemonicParsing="false" text="XLSX" toggleGroup="$outputFileFormat" />
+                                                      <RadioButton layoutX="153.0" layoutY="52.0" mnemonicParsing="false" text="XLSX" toggleGroup="$outputFileFormat" fx:id="xlsxButton" />
                                                       <TextField fx:id="csvdelimiter" layoutX="103.0" layoutY="70.0" />
                                                       <Button layoutX="441.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleClick" text="Open..." />
                                                       <Button fx:id="exportdbButton" layoutX="282.0" layoutY="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Export" />

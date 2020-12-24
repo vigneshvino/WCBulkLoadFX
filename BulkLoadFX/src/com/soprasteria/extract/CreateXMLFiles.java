@@ -26,6 +26,10 @@ import wt.doc.DocumentFactory;
 import wt.lifecycle.LifeCycleState;
 import wt.lifecycle.State;
 
+/**
+ * @author ayusrivastava
+ * */
+
 
 /*
  * Generates XML Mapping files depending upon the input
