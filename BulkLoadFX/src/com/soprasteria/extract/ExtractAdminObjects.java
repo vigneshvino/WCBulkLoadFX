@@ -11,14 +11,12 @@ import java.util.List;
 
 import wt.fc.PersistenceHelper;
 import wt.fc.QueryResult;
-import wt.fc.WTObject;
 import wt.lifecycle.LifeCycleHelper;
 import wt.lifecycle.LifeCycleTemplate;
 import wt.method.RemoteAccess;
 import wt.method.RemoteMethodServer;
 import wt.org.WTOrganization;
 import wt.org.WTUser;
-import wt.query.QueryException;
 import wt.query.QuerySpec;
 import wt.team.TeamTemplate;
 import wt.util.WTException;

@@ -1,10 +1,6 @@
 package com.soprasteria.export;
 
-import java.beans.XMLDecoder;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Blob;
@@ -16,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 
-import com.soprasteria.newFeature.AppPreferences;
 
 import javafx.scene.control.CheckBox;
 
@@ -128,7 +123,7 @@ public class ExportObject {
 						}
 					} else {
 						String columnValue = result.getString(i);
-						String columnName = resultMetaData.getColumnName(i);
+//						String columnName = resultMetaData.getColumnName(i);
 						
 						if (i<=columnSize-1) {
 							csvWriter.append(columnValue + DELIMITER);

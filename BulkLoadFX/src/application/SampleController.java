@@ -16,9 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.apache.bcel.generic.IFNULL;
-import org.eclipse.swt.internal.image.FileFormat;
-
 import com.soprasteria.connection.LoadDBConnection;
 import com.soprasteria.connection.LoadWindchillConnection;
 import com.soprasteria.export.ExportObject;
@@ -26,8 +23,7 @@ import com.soprasteria.extract.ExtractObjects;
 import com.soprasteria.newFeature.AppPreferences;
 import com.soprasteria.newFeature.SaveAppPreferences;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -37,9 +33,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 
 import javafx.scene.layout.HBox;
@@ -68,7 +62,6 @@ public class SampleController implements Initializable {
     private TextField srcServerPassword;
 
     @FXML
-<<<<<<< HEAD
     private Button srcTestConnectionBtn;
     
     @FXML
@@ -78,12 +71,7 @@ public class SampleController implements Initializable {
     private TextField saveDirectoryTF;
     
     @FXML
-=======
->>>>>>> 837e2d9f0c4a5c0983fc1249113ce7055b448420
     private ToggleGroup srcVersion;
-
-    @FXML
-    private Button srcTestConnectionBtn;
 
     @FXML
     private ToggleGroup targetVersion;
@@ -188,9 +176,6 @@ public class SampleController implements Initializable {
 
     @FXML
     private ToggleGroup extractionType;
-
-    @FXML
-    private Button exportButton;
 
     
    // private ObservableSet<CheckBox> selectedExpObjectsCB = FXCollections.observableSet();
