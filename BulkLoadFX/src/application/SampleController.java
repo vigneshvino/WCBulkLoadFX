@@ -1,11 +1,13 @@
 package application;
 
+
 import java.beans.XMLDecoder;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -32,14 +34,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
 
 public class SampleController implements Initializable {
 	
@@ -131,6 +139,20 @@ public class SampleController implements Initializable {
     @FXML
     private Button exportdbButton;
 
+    private ToggleGroup preLoadValidationSchema;
+
+	@FXML
+	private Pane userDefinedMapping;
+
+	@FXML
+	private Pane stagedData;
+	
+	@FXML
+	private AnchorPane loadTabAnchorPane;
+	
+	@FXML
+	private TextField dirChooserTextField;
+	
     @FXML
     private CheckBox CBWTPart;
 
@@ -158,8 +180,6 @@ public class SampleController implements Initializable {
     @FXML
     private Button exportButton;
 
-    @FXML
-    private ToggleGroup preLoadValidationSchema;
     
    // private ObservableSet<CheckBox> selectedExpObjectsCB = FXCollections.observableSet();
     
@@ -205,6 +225,20 @@ public class SampleController implements Initializable {
 		
 	}
 
+	//ActionEvent for directory chooser in Load tab
+	@FXML
+	private void dirChooserAction(ActionEvent event) {
+		DirectoryChooser chooser = new DirectoryChooser();
+		
+		Stage stage = (Stage)loadTabAnchorPane.getScene().getWindow();
+		
+		File file = chooser.showDialog(stage);
+		
+		if(file!=null) {
+			dirChooserTextField.setText(file.getAbsolutePath());
+		}
+	}
+    
 	@SuppressWarnings("unused")
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
