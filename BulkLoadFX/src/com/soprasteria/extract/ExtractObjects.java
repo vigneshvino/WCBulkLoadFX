@@ -3,6 +3,8 @@ package com.soprasteria.extract;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import com.soprasteria.extract.ExtractAdminObjects;
+
 import javafx.scene.control.TextField;
 
 public class ExtractObjects {
@@ -18,6 +20,11 @@ public class ExtractObjects {
 				// WTPart extraction process should begin
 				String typeName = "wt.part.WTPart";
 				ExtractWTPart.initialize(typeName,sourceServer,username,password);
+			}
+			
+			if(objName.equalsIgnoreCase("All Administrative Objects")) {
+				// ALL Administrative Object extraction process begins here
+				ExtractAdminObjects.initialize(sourceServer, username, password);
 			}
 		}
 	}
