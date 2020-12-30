@@ -68,6 +68,7 @@ public class Main extends Application {
 					Optional<ButtonType> option = confirmAlert.showAndWait();
 										
 					if (option.get() == ButtonType.YES) {
+						
 						SaveAppPreferences saveAppPrefs = new SaveAppPreferences();
 						saveAppPrefs.setAppPreferences();
 						
@@ -84,6 +85,7 @@ public class Main extends Application {
 				}
 			});
 		} catch(Exception e) {
+			System.out.println("Error : " + e.getMessage());
 			e.printStackTrace();
 		}
 	}

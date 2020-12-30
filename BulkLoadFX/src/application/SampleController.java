@@ -299,6 +299,8 @@ public class SampleController implements Initializable {
 				alert.setHeaderText("Windchill Migration Utility");
 				if(connectionResult) {
 					alert.setContentText("DB Connection success !!!");
+					SaveAppPreferences.saveDBTabPreferences(dbHostField.getText(), dbServiceName.getText(), 
+							dbPort.getText(), dbUsername.getText(), dbPassword.getText());
 				} else {
 					alert.setContentText("DB Connection Failed.!! Check the input.");
 				}
@@ -329,8 +331,6 @@ public class SampleController implements Initializable {
 					
 					ExportObject.exportObj();
 					
-					SaveAppPreferences.saveDBTabPreferences(dbHostField.getText(), dbServiceName.getText(), 
-							dbPort.getText(), dbUsername.getText(), dbPassword.getText());
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					System.out.println("Ohh! SOmething went wrong : " + e.getMessage());
