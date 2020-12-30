@@ -138,7 +138,8 @@ public class SampleController implements Initializable {
 
     @FXML
     private Button exportdbButton;
-
+    
+    @FXML
     private ToggleGroup preLoadValidationSchema;
 
 	@FXML
