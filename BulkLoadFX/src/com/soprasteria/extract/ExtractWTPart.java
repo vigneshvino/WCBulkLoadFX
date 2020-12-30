@@ -77,7 +77,7 @@ public class ExtractWTPart implements RemoteAccess {
 		// Export process starts from here
 		System.out.println("Object name from the application - " + type);
 		QuerySpec qspec = new QuerySpec(WTPart.class);
-		
+
 		QueryResult qresult = PersistenceHelper.manager.find(qspec);
 		System.out.println("Query result size in wtpart class is " + qresult.size());
 		while (qresult.hasMoreElements()) {
