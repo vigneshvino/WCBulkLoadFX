@@ -265,14 +265,13 @@ public class SampleController implements Initializable {
 			
 			dbHostField.setText(appPrefs.getHost());
 			dbServiceName.setText(appPrefs.getDatabase());
-
+			dbPort.setText(appPrefs.getPort());
 			dbUsername.setText(appPrefs.getUsername());
 			dbPassword.setText(appPrefs.getPassword());
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("The Preference file not found!!!!");
-			e.printStackTrace();
 		}
 		
 		distinctValue.setDisable(true);
