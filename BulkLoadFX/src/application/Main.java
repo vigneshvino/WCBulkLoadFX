@@ -9,12 +9,16 @@ import com.soprasteria.export.ExportObject;
 import com.soprasteria.newFeature.SaveAppPreferences;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Popup;
@@ -39,41 +43,65 @@ public class Main extends Application {
 			primaryStage.setTitle("WCMigratorFX v1.0");
 			primaryStage.setResizable(false);
 			primaryStage.show();
-			primaryStage.setOnCloseRequest(confirmCloseEventHandler);
+			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+				@Override
+				public void handle(WindowEvent event) {
+					// TODO Auto-generated method stub
+					Alert confirmAlert = new Alert(AlertType.CONFIRMATION,"", ButtonType.YES,ButtonType.NO,ButtonType.CANCEL);
+					confirmAlert.setTitle(String.format("Closing Application"));
+					confirmAlert.setHeaderText("Do you want save your preferences before closing the Application!!!");
+					
+//					confirmAlert.setOnCloseRequest(new EventHandler<DialogEvent>() {
+//
+//						@Override
+//						public void handle(DialogEvent event) {
+//							// TODO Auto-generated method stub
+//							
+//							if(event.getEventType().equals(WindowEvent.WINDOW_CLOSE_REQUEST)) {
+//								event.consume();
+//							}
+//							
+//						}
+//					});
+					
+					Optional<ButtonType> option = confirmAlert.showAndWait();
+										
+					if (option.get() == ButtonType.YES) {
+						SaveAppPreferences saveAppPrefs = new SaveAppPreferences();
+						saveAppPrefs.setAppPreferences();
+						
+						System.out.println("Config file created!!");
+						
+					} else if (option.get() == ButtonType.NO) {
+						return;
+					} else if (option.get() == ButtonType.CANCEL) {
+						confirmAlert.close();
+						primaryStage.show();
+					}
+					
+					return;
+				}
+			});
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private EventHandler<WindowEvent> confirmCloseEventHandler = new EventHandler<WindowEvent>() {
-
-		@Override
-		public void handle(WindowEvent event) {
-			// TODO Auto-generated method stub
-			showConfirmation();
-			
-		}
-	};
+//	private EventHandler<WindowEvent> confirmCloseEventHandler = new EventHandler<WindowEvent>() {
+//
+//		@Override
+//		public void handle(WindowEvent event) {
+//			// TODO Auto-generated method stub
+//			showConfirmation();
+//			
+//		}
+//	};
 	
-	private int showConfirmation() {
-		
-		Alert confirmAlert = new Alert(AlertType.CONFIRMATION,"", ButtonType.YES,ButtonType.NO);
-		confirmAlert.setTitle(String.format("Closing Application"));
-		confirmAlert.setHeaderText("Do you want save your preferences before closing the Application!!!");
-		
-		Optional<ButtonType> option = confirmAlert.showAndWait();
-		
-		if (option.get() == ButtonType.YES) {
-			SaveAppPreferences saveAppPrefs = new SaveAppPreferences();
-			saveAppPrefs.setAppPreferences();
-			
-			System.out.println("Config file created!!");
-			
-		} else if (option.get() == ButtonType.NO) {
-			return 0;
-		}
-		return 0;
-	}
+//	private int showConfirmation() {
+//		
+//
+//	}
 	
 	public static void main(String[] args) {
 		launch(args);
