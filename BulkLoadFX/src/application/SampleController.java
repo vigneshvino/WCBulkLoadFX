@@ -68,6 +68,18 @@ public class SampleController implements Initializable {
     private TextField srcServerPassword;
 
     @FXML
+<<<<<<< HEAD
+    private Button srcTestConnectionBtn;
+    
+    @FXML
+    private Button exportButton;
+    
+    @FXML
+    private TextField saveDirectoryTF;
+    
+    @FXML
+=======
+>>>>>>> 837e2d9f0c4a5c0983fc1249113ce7055b448420
     private ToggleGroup srcVersion;
 
     @FXML

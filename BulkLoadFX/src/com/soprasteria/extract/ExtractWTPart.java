@@ -12,6 +12,8 @@ import java.util.Locale;
 import java.util.TreeSet;
 
 import com.ptc.core.command.common.CommandException;
+import com.ptc.core.foundation.type.server.impl.TypeHelper;
+import com.ptc.core.lwc.client.util.EnumerationConstraintHelper;
 import com.ptc.core.lwc.common.view.AttributeDefinitionReadView;
 import com.ptc.core.lwc.common.view.PropertyValueReadView;
 import com.ptc.core.lwc.server.TypeDefinitionServiceHelper;
@@ -39,8 +41,12 @@ import wt.method.RemoteAccess;
 import wt.method.RemoteMethodServer;
 import wt.part.WTPart;
 import wt.query.QuerySpec;
+import wt.query.SearchCondition;
 import wt.services.applicationcontext.implementation.DefaultServiceProvider;
 import wt.session.SessionHelper;
+import wt.type.TypeDefinitionReference;
+import wt.type.TypedUtility;
+import wt.type.TypedUtilityServiceHelper;
 import wt.util.WTException;
 import wt.util.WTPropertyVetoException;
 
@@ -76,6 +82,18 @@ public class ExtractWTPart implements RemoteAccess {
 	public static void start(String type) throws WTException, RemoteException {
 		// Export process starts from here
 		System.out.println("Object name from the application - " + type);
+		
+		// Get the soft types list for input type here
+		TypeIdentifier typeIdent = TypeHelper.getTypeIdentifier(type);
+		TypeIdentifier[] typeIdentArray = TypedUtilityServiceHelper.service.getSubtypes(typeIdent, true, true, null);
+		for(TypeIdentifier typeIdentifier:typeIdentArray) {
+			TypeDefinitionReference typeDefRef = TypedUtility.getTypeDefinitionReference(typeIdentifier.getTypeInternalName());
+			QuerySpec qspec = new QuerySpec(WTPart.class);
+			qspec.appendWhere(new SearchCondition(WTPart.class, "typeDefinitionReference.key.id", SearchCondition.EQUAL,typeDefRef.getKey().getId()),new int[] {0});
+			QueryResult qresut = PersistenceHelper.manager.find(qspec);
+			System.out.println("Number of parts in this type - "+typeIdentifier.getTypeInternalName()+" is "+qresut.size());
+		}
+		
 		QuerySpec qspec = new QuerySpec(WTPart.class);
 
 		QueryResult qresult = PersistenceHelper.manager.find(qspec);
@@ -83,7 +101,7 @@ public class ExtractWTPart implements RemoteAccess {
 		while (qresult.hasMoreElements()) {
 			WTPart part = (WTPart) qresult.nextElement();
 			System.out.println("Part Number - " + part.getNumber() + " Name - " + part.getName() + " Created On - "
-					+ part.getCreateTimestamp() + " Modified On - " + part.getModifyTimestamp() + " LC State - "
+					+ part.getCreateTimestamp() +" Status - "+part.getCheckoutInfo()+" Modified By "+part.getModifierName()+ " Modified On - " + part.getModifyTimestamp() + " LC State - "
 					+ part.getLifeCycleState() + " Created By - " + part.getCreatorName());
 			IBAHolder ibaHolder = part;
 			getAttributeValueFromIBAHolder(ibaHolder);
@@ -109,6 +127,7 @@ public class ExtractWTPart implements RemoteAccess {
 			
 			for(int i = 0; i < theAtts.length; i++) {
 				AbstractValueView[] theValues = attContainer.getAttributeValues(theAtts[i]);
+				System.out.println("Getting the attribute values for "+theAtts[i]+" and value is "+theValues);
 				
 				if(theValues != null) {
 					key = new String();
@@ -133,7 +152,10 @@ public class ExtractWTPart implements RemoteAccess {
 						}
 					} else {
 						key = theAtts[i].getName();
-						for(int j=1; j < theValues.length; j++) {
+						System.out.println("theValues length is "+theValues.length);
+						for(int j=0; j < theValues.length; j++) {
+							System.out.println("theValues[j] - "+theValues[j].getLocalizedDisplayString(SessionHelper.manager.getLocale())+" --- "+theValues[j].getDefinition().getDisplayName());
+							
 							value = IBAValueUtility.getLocalizedIBAValueDisplayString(theValues[j], SessionHelper.manager.getLocale());
 						}
 					}
