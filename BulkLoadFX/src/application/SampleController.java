@@ -222,25 +222,25 @@ public class SampleController implements Initializable {
 			srcServerUsername.setText(appPrefs.getSrcServerUsername());
 			srcServerPassword.setText(appPrefs.getSrcServerPassword());
 			
-			if ((appPrefs.getSrcVersion()).equals(firstButton.getText())) {
+			if (appPrefs.getSrcVersion() != null && (appPrefs.getSrcVersion()).equals(firstButton.getText())) {
 				firstButton.setSelected(true);
-			}else if ((appPrefs.getSrcVersion()).equals(secondButton.getText())) {
+			}else if (appPrefs.getSrcVersion() != null && (appPrefs.getSrcVersion()).equals(secondButton.getText())) {
 				secondButton.setSelected(true);
-			}else if ((appPrefs.getSrcVersion()).equals(thirdButton.getText())) {
+			}else if (appPrefs.getSrcVersion() != null && (appPrefs.getSrcVersion()).equals(thirdButton.getText())) {
 				thirdButton.setSelected(true);
 			}
 			
 			
 			dbHostField.setText(appPrefs.getHost());
 			dbServiceName.setText(appPrefs.getDatabase());
-			dbPort.setText(appPrefs.getPort());
+
 			dbUsername.setText(appPrefs.getUsername());
 			dbPassword.setText(appPrefs.getPassword());
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("The Preference file not found!!!!");
-//			e.printStackTrace();
+			e.printStackTrace();
 		}
 		
 		distinctValue.setDisable(true);
@@ -265,6 +265,8 @@ public class SampleController implements Initializable {
 				alert.setHeaderText("Windchill Migration Utility");
 				if(connectionResult) {
 					alert.setContentText("DB Connection success !!!");
+					SaveAppPreferences.saveDBTabPreferences(dbHostField.getText(), dbServiceName.getText(), 
+							dbPort.getText(), dbUsername.getText(), dbPassword.getText());
 				} else {
 					alert.setContentText("DB Connection Failed.!! Check the input.");
 				}
@@ -294,9 +296,6 @@ public class SampleController implements Initializable {
 							filename.getText(), fileformat.getText(), csvdelimiter.getText());
 					
 					ExportObject.exportObj();
-					
-					SaveAppPreferences.saveDBTabPreferences(dbHostField.getText(), dbServiceName.getText(), 
-							dbPort.getText(), dbUsername.getText(), dbPassword.getText());
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					System.out.println("Ohh! SOmething went wrong : " + e.getMessage());

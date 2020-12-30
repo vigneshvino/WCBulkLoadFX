@@ -42,7 +42,6 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("WCMigratorFX v1.0");
 			primaryStage.setResizable(false);
-			primaryStage.show();
 			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 				@Override
@@ -51,19 +50,6 @@ public class Main extends Application {
 					Alert confirmAlert = new Alert(AlertType.CONFIRMATION,"", ButtonType.YES,ButtonType.NO,ButtonType.CANCEL);
 					confirmAlert.setTitle(String.format("Closing Application"));
 					confirmAlert.setHeaderText("Do you want save your preferences before closing the Application!!!");
-					
-//					confirmAlert.setOnCloseRequest(new EventHandler<DialogEvent>() {
-//
-//						@Override
-//						public void handle(DialogEvent event) {
-//							// TODO Auto-generated method stub
-//							
-//							if(event.getEventType().equals(WindowEvent.WINDOW_CLOSE_REQUEST)) {
-//								event.consume();
-//							}
-//							
-//						}
-//					});
 					
 					Optional<ButtonType> option = confirmAlert.showAndWait();
 										
@@ -76,32 +62,19 @@ public class Main extends Application {
 					} else if (option.get() == ButtonType.NO) {
 						return;
 					} else if (option.get() == ButtonType.CANCEL) {
-						confirmAlert.close();
-						primaryStage.show();
+						event.consume();
+						
 					}
 					
 					return;
 				}
 			});
+			
+			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-//	private EventHandler<WindowEvent> confirmCloseEventHandler = new EventHandler<WindowEvent>() {
-//
-//		@Override
-//		public void handle(WindowEvent event) {
-//			// TODO Auto-generated method stub
-//			showConfirmation();
-//			
-//		}
-//	};
-	
-//	private int showConfirmation() {
-//		
-//
-//	}
 	
 	public static void main(String[] args) {
 		launch(args);
