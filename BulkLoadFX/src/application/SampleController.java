@@ -53,6 +53,9 @@ public class SampleController implements Initializable {
     private Button exportButton;
     
     @FXML
+    private TextField saveDirectoryTF;
+    
+    @FXML
     private ToggleGroup srcVersion;
 
     @FXML
