@@ -12,7 +12,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/vvigneshwaran/Downloads/charm-glisten-4.4.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
@@ -24,7 +23,6 @@
 	<classpathentry kind="lib" path="C:/ptc/Windchill_11.1/Windchill/lib/wnc.jar"/>
 	<classpathentry kind="lib" path="C:/ptc/Windchill_11.1/Windchill/codebase/lib/aopalliance.jar"/>
 	<classpathentry kind="lib" path="C:/ptc/Windchill_11.1/Windchill/codebase/lib/avalon-framework.jar"/>
-	<classpathentry kind="lib" path="C:/ptc/Windchill_11.1/Windchill/codebase/lib/borland.jar"/>
 	<classpathentry kind="lib" path="C:/ptc/Windchill_11.1/Windchill/codebase/lib/commons-codec.jar"/>
 	<classpathentry kind="lib" path="C:/ptc/Windchill_11.1/Windchill/codebase/lib/commons-collections.jar"/>
 	<classpathentry kind="lib" path="C:/ptc/Windchill_11.1/Windchill/codebase/lib/commons-lang.jar"/>

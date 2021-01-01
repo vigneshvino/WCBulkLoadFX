@@ -1,10 +1,19 @@
 package application;
 	
+import java.util.Optional;
+
+import com.soprasteria.newFeature.SaveAppPreferences;
+
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /****
  * Main class for the application
@@ -12,6 +21,7 @@ import javafx.stage.Stage;
  *
  */
 public class Main extends Application {
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -22,8 +32,38 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("WCMigratorFX v1.0");
 			primaryStage.setResizable(false);
+			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+				@Override
+				public void handle(WindowEvent event) {
+					// TODO Auto-generated method stub
+					Alert confirmAlert = new Alert(AlertType.CONFIRMATION,"", ButtonType.YES,ButtonType.NO,ButtonType.CANCEL);
+					confirmAlert.setTitle(String.format("Closing Application"));
+					confirmAlert.setHeaderText("Do you want save your preferences before closing the Application!!!");
+					
+					Optional<ButtonType> option = confirmAlert.showAndWait();
+										
+					if (option.get() == ButtonType.YES) {
+						
+						SaveAppPreferences saveAppPrefs = new SaveAppPreferences();
+						saveAppPrefs.setAppPreferences();
+						
+						System.out.println("Config file created!!");
+						
+					} else if (option.get() == ButtonType.NO) {
+						return;
+					} else if (option.get() == ButtonType.CANCEL) {
+						event.consume();
+						
+					}
+					
+					return;
+				}
+			});
+			
 			primaryStage.show();
 		} catch(Exception e) {
+			System.out.println("Error : " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -31,4 +71,5 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
 }

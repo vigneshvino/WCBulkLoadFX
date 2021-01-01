@@ -5,7 +5,14 @@ import java.rmi.RemoteException;
 import com.ptc.core.foundation.type.server.impl.TypeHelper;
 import com.ptc.core.meta.common.TypeIdentifier;
 
+import wt.fc.PersistenceHelper;
+import wt.fc.QueryResult;
+import wt.part.WTPart;
+import wt.query.QuerySpec;
+import wt.query.SearchCondition;
 import wt.session.SessionHelper;
+import wt.type.TypeDefinitionReference;
+import wt.type.TypedUtility;
 import wt.type.TypedUtilityServiceHelper;
 import wt.util.WTException;
 
@@ -22,8 +29,12 @@ public class TestGettingSoftTypeValue {
 
 			for(TypeIdentifier typeIdentifier:typeIdentArray) {
 				String typeName = TypedUtilityServiceHelper.service.getLocalizedTypeName(typeIdentifier, SessionHelper.getLocale());
-				System.out.println("TypeName we got here is "+typeName);
+				System.out.println("TypeIdentifier Value is "+typeIdentifier+" typename is "+typeName);
+				TypeDefinitionReference typeDefReference = TypedUtility.getTypeDefinitionReference(typeIdentifier.getTypename());
+				System.out.println("TypeDefinitionReference value is "+typeDefReference);
+				
 			}
+			
 		} catch (RemoteException | WTException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
