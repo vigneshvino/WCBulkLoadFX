@@ -16,17 +16,26 @@ import com.ptc.core.foundation.type.server.impl.TypeHelper;
 import com.ptc.core.lwc.client.util.EnumerationConstraintHelper;
 import com.ptc.core.lwc.common.view.AttributeDefinitionReadView;
 import com.ptc.core.lwc.common.view.PropertyValueReadView;
+import com.ptc.core.lwc.common.view.TypeDefinitionReadView;
+import com.ptc.core.lwc.server.LWCEnumerationEntryValuesFactory;
+import com.ptc.core.lwc.server.PersistableAdapter;
 import com.ptc.core.lwc.server.TypeDefinitionServiceHelper;
 import com.ptc.core.meta.common.AttributeTypeIdentifier;
 import com.ptc.core.meta.common.AttributeTypeIdentifierSet;
+import com.ptc.core.meta.common.DataSet;
 import com.ptc.core.meta.common.DefinitionIdentifier;
+import com.ptc.core.meta.common.DisplayOperationIdentifier;
+import com.ptc.core.meta.common.EnumeratedSet;
+import com.ptc.core.meta.common.EnumerationEntryIdentifier;
 import com.ptc.core.meta.common.IdentifierComparator;
 import com.ptc.core.meta.common.TypeIdentifier;
+import com.ptc.core.meta.container.common.AttributeTypeSummary;
 import com.ptc.core.meta.descriptor.common.DefinitionDescriptor;
 import com.ptc.core.meta.descriptor.common.DefinitionDescriptorFactory;
 import com.ptc.core.meta.server.TypeIdentifierUtility;
 import com.ptc.core.meta.type.command.typemodel.common.GetSoftSchemaAttributesCommand;
 
+import wt.fc.Persistable;
 import wt.fc.PersistenceHelper;
 import wt.fc.QueryResult;
 import wt.iba.definition.litedefinition.AttributeDefDefaultView;
@@ -37,6 +46,7 @@ import wt.iba.value.litevalue.AbstractValueView;
 import wt.iba.value.litevalue.FloatValueDefaultView;
 import wt.iba.value.litevalue.TimestampValueDefaultView;
 import wt.iba.value.service.IBAValueHelper;
+import wt.meta.LocalizedValues;
 import wt.method.RemoteAccess;
 import wt.method.RemoteMethodServer;
 import wt.part.WTPart;
@@ -90,29 +100,31 @@ public class ExtractWTPart implements RemoteAccess {
 			TypeDefinitionReference typeDefRef = TypedUtility.getTypeDefinitionReference(typeIdentifier.getTypeInternalName());
 			QuerySpec qspec = new QuerySpec(WTPart.class);
 			qspec.appendWhere(new SearchCondition(WTPart.class, "typeDefinitionReference.key.id", SearchCondition.EQUAL,typeDefRef.getKey().getId()),new int[] {0});
-			QueryResult qresut = PersistenceHelper.manager.find(qspec);
-			System.out.println("Number of parts in this type - "+typeIdentifier.getTypeInternalName()+" is "+qresut.size());
+			QueryResult qresult = PersistenceHelper.manager.find(qspec);
+			System.out.println("Number of parts in this type - "+typeIdentifier.getTypeInternalName()+" is "+qresult.size());
+			while (qresult.hasMoreElements()) {
+				WTPart part = (WTPart) qresult.nextElement();
+				System.out.println("Part Number - " + part.getNumber() + " Name - " + part.getName() + " Created On - "
+						+ part.getCreateTimestamp() +" Status - "+part.getCheckoutInfo()+" Modified By "+part.getModifierName()+ " Modified On - " + part.getModifyTimestamp() + " LC State - "
+						+ part.getLifeCycleState() + " Created By - " + part.getCreatorName());
+				IBAHolder ibaHolder = part;
+				getAttributeValueFromIBAHolder(ibaHolder,typeIdentifier.getTypeInternalName());
+			}
+	//		TypeIdentifier typeIdentifier = TypeIdentifierUtility.getTypeIdentifier("wt.part.WTPart");
+			System.out.println("TypeIdentifier value - "+typeIdentifier+" getTypeName - "+typeIdentifier.getTypename());
+			getSoftAttributes(typeIdentifier, SessionHelper.manager.getLocale());
 		}
 		
-		QuerySpec qspec = new QuerySpec(WTPart.class);
+/*		QuerySpec qspec = new QuerySpec(WTPart.class);
 
 		QueryResult qresult = PersistenceHelper.manager.find(qspec);
-		System.out.println("Query result size in wtpart class is " + qresult.size());
-		while (qresult.hasMoreElements()) {
-			WTPart part = (WTPart) qresult.nextElement();
-			System.out.println("Part Number - " + part.getNumber() + " Name - " + part.getName() + " Created On - "
-					+ part.getCreateTimestamp() +" Status - "+part.getCheckoutInfo()+" Modified By "+part.getModifierName()+ " Modified On - " + part.getModifyTimestamp() + " LC State - "
-					+ part.getLifeCycleState() + " Created By - " + part.getCreatorName());
-			IBAHolder ibaHolder = part;
-			getAttributeValueFromIBAHolder(ibaHolder);
-		}
-		TypeIdentifier typeIdentifier = TypeIdentifierUtility.getTypeIdentifier("wt.part.WTPart");
-		System.out.println("TypeIdentifier value - "+typeIdentifier+" getTypeName - "+typeIdentifier.getTypename());
-//		getSoftAttributes(typeIdentifier, SessionHelper.manager.getLocale());
+		System.out.println("Query result size in wtpart class is " + qresult.size());*/
+		
+		
 
 	}
 
-	private static void getAttributeValueFromIBAHolder(IBAHolder ibaHolder) throws RemoteException, WTException {
+	private static void getAttributeValueFromIBAHolder(IBAHolder ibaHolder, String typeName) throws RemoteException, WTException {
 		// TODO Auto-generated method stub
 		NumberFormat formatter = new DecimalFormat("#.########");
 		
@@ -151,16 +163,66 @@ public class ExtractWTPart implements RemoteAccess {
 							// Add Logic to convert timestamp to locale timezone
 						}
 					} else {
-						key = theAtts[i].getName();
+						key = theAtts[i].getDisplayName();
 						System.out.println("theValues length is "+theValues.length);
 						for(int j=0; j < theValues.length; j++) {
 							System.out.println("theValues[j] - "+theValues[j].getLocalizedDisplayString(SessionHelper.manager.getLocale())+" --- "+theValues[j].getDefinition().getDisplayName());
-							
+							System.out.println("IBA value for key - "+key+" is "+theValues[j]);
 							value = IBAValueUtility.getLocalizedIBAValueDisplayString(theValues[j], SessionHelper.manager.getLocale());
 						}
 					}
 					
 					System.out.println("Key -- "+key+" value -- "+value);
+					System.out.println("Internal name of the key is "+theAtts[i].getName()+" Hierarichal display name is "+theAtts[i].getHierarchyDisplayName());
+					String internalName = theAtts[i].getName();
+					
+					PersistableAdapter persAdapter = new PersistableAdapter((Persistable) ibaHolder, null, SessionHelper.manager.getLocale(),new DisplayOperationIdentifier());
+					persAdapter.load(internalName);
+					Object attValue = persAdapter.get(internalName);
+					System.out.println("Value of internal name attribute - "+internalName+" is "+attValue.toString());
+					if(attValue != null) {
+						AttributeTypeSummary ats = persAdapter.getAttributeDescriptor(internalName);
+						
+						/*AttributeDefinitionReadView adrv = TypeDefinitionServiceHelper.service.getAttributeDefView(ats.getAttributeTypeIdentifier());
+						System.out.println("adrv value is "+adrv);
+						if(adrv != null) {
+							PropertyValueReadView pvrv = adrv.getPropertyValueByName("displayName");
+							if(pvrv != null) {
+								String displayValueIBA = pvrv.getValueAsString();
+								System.out.println("*** displayValueIBA - "+displayValueIBA);
+							}
+						}*/
+						DataSet legalValueSet = ats.getLegalValueSet();
+						if(legalValueSet instanceof EnumeratedSet) {
+							System.out.println("Selected attribute is global enumeration ..!! "+legalValueSet);
+						}
+					/*	EnumerationEntryIdentifier enumIdentifier = ((EnumeratedSet) legalValueSet).getElementByKey(attValue.toString());
+						LWCEnumerationEntryValuesFactory eevf = new LWCEnumerationEntryValuesFactory();
+						LocalizedValues values = eevf.get(enumIdentifier, Locale.ENGLISH);
+						System.out.println("*** Display value is "+values.getDisplay());*/
+						if(legalValueSet instanceof EnumeratedSet) {
+							EnumeratedSet enumSet = (EnumeratedSet) legalValueSet.getIntersection(legalValueSet);
+							System.out.println("enumSet getElements value is "+enumSet.getElements());
+							if(enumSet != null) {
+								EnumerationEntryIdentifier identifier = enumSet.getElementByKey(attValue.toString());
+								System.out.println("identifier value is "+identifier);
+								if((identifier != null) && (identifier.getKey() != null)) {
+									String enumKey = (String) identifier.getKey();
+									if(attValue.equals(enumKey)) {
+										DefinitionDescriptor defValue = DESCRIPTOR_FACTORY.get(identifier, null, SessionHelper.manager.getLocale());
+										String displayIBAValue = defValue.getDisplay();
+										System.out.println("*** display name of iba got through enum definition is "+displayIBAValue);
+									}
+								}
+							}
+						}
+					}
+					// Getting iba display value using typename
+			/*		TypeIdentifier identifier = TypedUtility.getTypeIdentifier(typeName);
+					TypeDefinitionReadView view = TypeDefinitionServiceHelper.service.getTypeDefView(identifier);
+					AttributeDefinitionReadView attReadView = view.getAttributeByName(internalName);
+					String displayName = attReadView.getPropertyValueByName("displayName").getValue(SessionHelper.manager.getLocale(), false).toString();
+					System.out.println("Display Name of attribute- "+internalName+" and its value is "+displayName);*/
 				}
 			}
 		}
@@ -213,6 +275,7 @@ public class ExtractWTPart implements RemoteAccess {
 				}
 			}
 			linkedHashMap.put(str, attributeDefinitionReadView.getName());
+			System.out.println("size of linkedHashmap is "+linkedHashMap.size());
 		}
 		return linkedHashMap;
 	}
