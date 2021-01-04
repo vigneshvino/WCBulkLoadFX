@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FilterController">
+   <children>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="657.0">
+         <children>
+            <Label layoutX="49.0" layoutY="24.0" text="Name" />
+            <Label layoutX="49.0" layoutY="58.0" text="Iteration" />
+            <Label layoutX="49.0" layoutY="92.0" text="Lifecycle state" />
+            <TextField fx:id="name" layoutX="176.0" layoutY="20.0" />
+            <ChoiceBox fx:id="iteration" layoutX="175.0" layoutY="54.0" prefWidth="150.0" value="Latest">
+               <items>
+                  <FXCollections fx:factory="observableArrayList">
+                     <String fx:value="Latest" />
+                     <String fx:value="Old" />
+                     <String fx:value="Oldest" />
+                  </FXCollections>
+               </items>
+            </ChoiceBox>
+            <ChoiceBox fx:id="lifecycle" layoutX="175.0" layoutY="88.0" prefWidth="150.0" value="INWORK">
+               <items>
+                  <FXCollections fx:factory="observableArrayList">
+                     <String fx:value="INWORK" />
+                     <String fx:value="UNDER REVIEW" />
+                     <String fx:value="RELEASED" />
+                  </FXCollections>
+               </items>
+            </ChoiceBox>
+            <TitledPane animated="false" collapsible="false" layoutX="49.0" layoutY="122.0" prefHeight="205.0" prefWidth="548.0" text="Collect objects from type" AnchorPane.leftAnchor="49.0">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <RadioButton layoutX="14.0" layoutY="6.0" mnemonicParsing="false" selected="true" text="Container">
+                        	<toggleGroup>
+                        		<ToggleGroup fx:id="containerType" />
+                        	</toggleGroup>
+                        </RadioButton>
+                        <RadioButton layoutX="128.0" layoutY="6.0" mnemonicParsing="false" text="Folder" toggleGroup="$containerType" />
+                        <RadioButton layoutX="232.0" layoutY="6.0" mnemonicParsing="false" text="Object" toggleGroup="$containerType" />
+                        <TitledPane fx:id="containerPane" animated="false" collapsible="false" layoutX="14.0" layoutY="29.0" prefHeight="131.0" prefWidth="512.0" text="Container">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ChoiceBox layoutX="14.0" layoutY="8.0" prefWidth="150.0" />
+                                    <Label layoutX="14.0" layoutY="44.0" text="Container Name" />
+                                    <Label layoutX="14.0" layoutY="76.0" text="Container Organization" />
+                                    <TextField layoutX="181.0" layoutY="40.0" />
+                                    <TextField layoutX="181.0" layoutY="72.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                        <TitledPane fx:id="folderPane" animated="false" collapsible="false" layoutX="14.0" layoutY="29.0" prefHeight="131.0" prefWidth="512.0" text="Project" visible="false">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ChoiceBox layoutX="14.0" layoutY="8.0" prefWidth="150.0" />
+                                    <Label layoutX="14.0" layoutY="44.0" text="Project Name" />
+                                    <Label layoutX="14.0" layoutY="76.0" text="Parent Product" />
+                                    <TextField layoutX="181.0" layoutY="40.0" />
+                                    <TextField layoutX="181.0" layoutY="72.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <TitledPane fx:id="objectPane" animated="false" collapsible="false" layoutX="14.0" layoutY="29.0" prefHeight="131.0" prefWidth="512.0" text="Object" visible="false">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ChoiceBox layoutX="14.0" layoutY="8.0" prefWidth="150.0" />
+                                    <Label layoutX="14.0" layoutY="44.0" text="Object Name" />
+                                    <Label layoutX="14.0" layoutY="76.0" text="Parent Folder" />
+                                    <TextField layoutX="181.0" layoutY="40.0" />
+                                    <TextField layoutX="181.0" layoutY="72.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" collapsible="false" layoutX="49.0" layoutY="344.0" prefHeight="172.0" prefWidth="548.0" text="EPM Dependency Type">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ChoiceBox layoutX="14.0" layoutY="14.0" prefWidth="150.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </TitledPane>
+            <TitledPane animated="false" collapsible="false" layoutX="65.0" layoutY="413.0" prefHeight="87.0" prefWidth="512.0" text="As stored type">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ChoiceBox layoutX="14.0" layoutY="14.0" prefWidth="150.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </TitledPane>
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>
