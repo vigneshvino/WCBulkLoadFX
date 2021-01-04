@@ -47,8 +47,8 @@ public class ExtractAdminObjects implements RemoteAccess{
 		
 		
 		try {
-			result = (ArrayList<ArrayList<String>>) rms.invoke("fetchData", "com.soprasteria.extract.ExtractAdminObjects", null, new Class[] {String.class}, new Object[] {});
-			mapLCStates = (HashMap<String, ArrayList<String>>) rms.invoke("fetchLCStates", "com.soprasteria.extract.ExtractAdminObjects", null, new Class[] {String.class}, new Object[] {});
+			result = (ArrayList<ArrayList<String>>) rms.invoke("fetchData", "com.soprasteria.extract.ExtractAdminObjects", null, new Class[] {}, new Object[] {});
+			mapLCStates = (HashMap<String, ArrayList<String>>) rms.invoke("fetchLCStates", "com.soprasteria.extract.ExtractAdminObjects", null, new Class[] {}, new Object[] {});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
