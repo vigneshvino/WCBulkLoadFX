@@ -34,7 +34,7 @@ import org.w3c.dom.Element;
 
 public class CreateXMLFiles {
 	
-	public static String xmlFilePath = "D:\\xmlFileLoc\\";
+	public static String xmlFilePath = "D:\\WCBulkLoadFX_POC\\xmlFileMappings\\";
 	
 	/***
 	 * Generates the XML Mapping for Users
@@ -44,6 +44,12 @@ public class CreateXMLFiles {
 	public static void createUserXml(List<String> userList) {
 		
 		String userXmlFile = xmlFilePath + "UserMapping.xml";
+		File file = new File(userXmlFile);
+		if (!file.getParentFile().exists()) {
+			System.out.println("The xmlFileMapping directory does not exists!!");
+			file.getParentFile().mkdirs();
+			System.out.println("The xmlFileMapping directory created!!");
+		}
 		
 		try {
 			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();

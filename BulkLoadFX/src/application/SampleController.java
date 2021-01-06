@@ -242,7 +242,7 @@ public class SampleController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		
-		final String CONFIG = "D:\\WCBulkLoadFX_POC\\appconfig.xml";
+		final String CONFIG = "D:\\WCBulkLoadFX_POC\\config_files\\appconfig.xml";
 		
 		File file = new File(CONFIG);
 		
@@ -278,8 +278,9 @@ public class SampleController implements Initializable {
 				System.out.println("The User Config file not found!!!!");
 			}
 		} else {
+			System.out.println("The config_files directory does not exist!!");
 			file.getParentFile().mkdirs();
-			System.out.println("it doesn't exist!!");
+			System.out.println("The config_files directory created!!");
 		}
 		
 		distinctValue.setDisable(true);
