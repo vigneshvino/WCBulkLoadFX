@@ -307,7 +307,7 @@ public class CreateXMLFiles {
 				lifecycleTemplateMaster.setAttributeNode(srcName);
 				
 				Attr targetName = document.createAttribute("targetName");
-				srcName.setValue(lcName);
+				targetName.setValue(lcName);
 				lifecycleTemplateMaster.setAttributeNode(targetName);
 				
 				for(int i=0; i<lcState.size(); i++) {

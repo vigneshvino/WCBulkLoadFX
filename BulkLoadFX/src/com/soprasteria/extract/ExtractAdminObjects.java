@@ -200,7 +200,7 @@ public class ExtractAdminObjects implements RemoteAccess{
 			states.addAll(LifeCycleHelper.service.findStates(lcTemplate.get(i)));
 						
 			for (int j=0;j<states.size();j++) {
-				System.out.println("LifeCycle_Template : " + lcTemplateName + "\tStates : " + states.get(j).toString());
+//				System.out.println("LifeCycle_Template : " + lcTemplateName + "\tStates : " + states.get(j).toString());
 				allstates.add(states.get(j).toString());
 			}
 			
