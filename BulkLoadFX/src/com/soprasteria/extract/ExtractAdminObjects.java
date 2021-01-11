@@ -41,11 +41,7 @@ public class ExtractAdminObjects implements RemoteAccess{
 		RemoteMethodServer rms = RemoteMethodServer.getInstance(wc_url,serviceName);
 		rms.setUserName(username);
 		rms.setPassword(password);
-		
-		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
-		HashMap<String, ArrayList<String>> mapLCStates = new HashMap<String, ArrayList<String>>();
-		
-		
+			
 		try {
 				rms.invoke("fetchData", "com.soprasteria.extract.ExtractAdminObjects", null, new Class[] {}, 
 						new Object[] {});
