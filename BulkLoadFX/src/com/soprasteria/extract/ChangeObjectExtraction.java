@@ -26,7 +26,7 @@ public class ChangeObjectExtraction implements RemoteAccess{
 		// TODO Auto-generated method stub
 		
 		String serviceName = "MethodServer";
-		URL wc_url = new URL("http://localhost/Windchill/");
+		URL wc_url = new URL("http://ayush.soprasteria.com/Windchill/");
 		System.out.println(wc_url.toString());
 		
 		RemoteMethodServer rms = RemoteMethodServer.getInstance(wc_url, serviceName);
