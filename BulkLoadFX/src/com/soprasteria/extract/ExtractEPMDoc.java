@@ -7,16 +7,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ptc.core.foundation.util.common.impl.GetOrganizationDefaultTypeRemoteWorker;
-import com.ptc.core.foundation.util.common.impl.IsInstalledPropertyRemoteWorker;
-import com.ptc.windchill.cadx.common.util.AssociateUtilities;
 import com.ptc.windchill.cadx.common.util.ObjectDependencyUtility;
 
 import wt.epm.EPMDocument;
 import wt.fc.PersistenceHelper;
 import wt.fc.QueryResult;
 import wt.part.WTPart;
-import wt.part.WTPartHelper;
 import wt.query.QueryException;
 import wt.query.QuerySpec;
 import wt.util.WTException;
