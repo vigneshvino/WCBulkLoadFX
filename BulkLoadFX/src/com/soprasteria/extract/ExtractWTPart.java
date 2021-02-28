@@ -77,7 +77,7 @@ public class ExtractWTPart implements RemoteAccess {
 	private static final DefinitionDescriptorFactory DESCRIPTOR_FACTORY = (DefinitionDescriptorFactory) DefaultServiceProvider
 			.getService(DefinitionDescriptorFactory.class, "default");
 
-	public static void initialize(String typeName, String sourceServer, String username, String password)
+	public static void initialize(String typeName, String sourceServer, String username, String password, String exportPath)
 			throws MalformedURLException {
 		// TODO Auto-generated method stub
 		String serviceName = "MethodServer";
@@ -90,8 +90,8 @@ public class ExtractWTPart implements RemoteAccess {
 		rms.setPassword(password);
 
 		try {
-			rms.invoke("start", "com.soprasteria.extract.ExtractWTPart", null, new Class[] { String.class },
-					new Object[] { typeName });
+			rms.invoke("start", "com.soprasteria.extract.ExtractWTPart", null, new Class[] { String.class, String.class },
+					new Object[] { typeName, exportPath });
 			System.out.println("After this point logs will go to MS");
 
 		} catch (Exception e) {
@@ -101,7 +101,7 @@ public class ExtractWTPart implements RemoteAccess {
 
 	}
 
-	public static void start(String type) throws WTException, IOException {
+	public static void start(String type, String exportPath) throws WTException, IOException {
 		// Export process starts from here
 		System.out.println("Object name from the application - " + type);
 		
@@ -163,7 +163,7 @@ public class ExtractWTPart implements RemoteAccess {
 			}
 			// Pass the row list and iba list for csv writing
 			if(typeName != null) {
-			writeTocsvFile(rows,ibaNameList,typeName);
+			writeTocsvFile(rows,ibaNameList,typeName,exportPath);
 			}
 			
 	//		TypeIdentifier typeIdentifier = TypeIdentifierUtility.getTypeIdentifier("wt.part.WTPart");
@@ -225,7 +225,7 @@ public class ExtractWTPart implements RemoteAccess {
 		}
 		
 		String typeName = "WTPart";
-		writeTocsvFile(rows_genericPart,ibaNameList_genericPart,typeName);
+		writeTocsvFile(rows_genericPart,ibaNameList_genericPart,typeName,exportPath);
 	}
 
 	private static String preparePartEntry(WTPart part) throws VersionControlException {
@@ -240,9 +240,9 @@ public class ExtractWTPart implements RemoteAccess {
 		return entry;
 	}
 
-	private static void writeTocsvFile(List<String> rows, ArrayList<String> ibaList, String typeName) throws IOException {
+	private static void writeTocsvFile(List<String> rows, ArrayList<String> ibaList, String typeName, String exportPath) throws IOException {
 		// TODO Auto-generated method stub
-		FileWriter csvWriter = new FileWriter(new File("C:\\dev\\ExtractedFiles\\"+typeName+".csv"));
+		FileWriter csvWriter = new FileWriter(exportPath+File.separator+typeName+".csv");
 		csvWriter.append("NUMBER;NAME;OBJECTTYPE;ENDITEM;TRACECODE;GENERICTYPE;FOLDER_LOCATION;ORGANIZATION_ID;REVISION;ITERATION;VIEW;STATE;LIFECYCLE_TEMPLATE;SOURCE;DEFAULT_UNIT;COLLAPSIBLE;CREATED_BY;MODIFIED_BY;CREATED_DATE;MODIFIED_DATE");
 		csvWriter.append(";");
 		for (String ibaName:ibaList) {

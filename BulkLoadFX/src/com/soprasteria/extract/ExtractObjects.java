@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 
 public class ExtractObjects {
 
-	public static void beginExtract(List<String> selectedValueList, TextField srcServerHostName, TextField srcServerUsername, TextField srcServerPassword) throws MalformedURLException {
+	public static void beginExtract(List<String> selectedValueList, TextField srcServerHostName, TextField srcServerUsername, TextField srcServerPassword, String exportPath) throws MalformedURLException {
 		// Retrieve the objects selected to be exported
 		String sourceServer = srcServerHostName.getText();
 		String username = srcServerUsername.getText();
@@ -19,7 +19,7 @@ public class ExtractObjects {
 			if(objName.equalsIgnoreCase("WTPart")) {
 				// WTPart extraction process should begin
 				String typeName = "wt.part.WTPart";
-				ExtractWTPart.initialize(typeName,sourceServer,username,password);
+				ExtractWTPart.initialize(typeName,sourceServer,username,password,exportPath);
 			}
 			
 			if(objName.equalsIgnoreCase("All Administrative Objects")) {
