@@ -187,6 +187,10 @@ public class SampleController implements Initializable {
     @FXML
     private Button filterOptions;
     
+    //temporary button in extraction tab
+    @FXML
+    private Button recieveData;
+    
    // private ObservableSet<CheckBox> selectedExpObjectsCB = FXCollections.observableSet();
        
     //Primary Stage Object
@@ -444,6 +448,20 @@ public class SampleController implements Initializable {
 					e.printStackTrace();
 				}
 			}
+		});
+		
+		//temporary action on button to check if we have received data from the filter options window
+		recieveData.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				
+				FOHolder holder = FOHolder.getInstance();
+				FO fo = holder.getFo();
+				System.out.println(fo);
+				
+			}
+			
 		});
 		
 	}

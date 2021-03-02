@@ -20,6 +20,18 @@ import javafx.scene.control.ToggleGroup;
 public class FilterController implements Initializable {
 	
 	@FXML
+	private TextField name;
+	
+	@FXML
+	private ChoiceBox<String> iteration;
+	
+	@FXML
+	private TextField lifecycle;
+	
+	@FXML
+	private Button sendData;
+	
+	@FXML
 	private ToggleGroup containerType;
 	
 	@FXML
@@ -61,6 +73,18 @@ public class FilterController implements Initializable {
 			}
 		});		
 		
+		//Event when the test button is clicked
+		sendData.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				
+				FO data = new FO(name.getText(), iteration.getValue(), lifecycle.getText());
+				FOHolder holder = FOHolder.getInstance();
+				holder.setFo(data);
+				
+			}
+		});
 	}
 
 }

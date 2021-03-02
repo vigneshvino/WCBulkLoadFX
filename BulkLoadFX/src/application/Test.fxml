@@ -220,6 +220,7 @@
                         <Button layoutX="469.0" layoutY="466.0" mnemonicParsing="false" text="Test Connection" />
                         <Button fx:id="filterOptions" layoutX="45.0" layoutY="98.0" mnemonicParsing="false" text="Filter Options" />
                         <Button fx:id="exportButton" layoutX="458.0" layoutY="270.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Export" />
+                        <Button fx:id="recieveData" layoutX="514.0" layoutY="98.0" mnemonicParsing="false" text="Recieve" />
                      </children></AnchorPane>
           	</content>
           </Tab>
