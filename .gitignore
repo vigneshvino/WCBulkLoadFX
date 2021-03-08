@@ -1,3 +1,8 @@
 /.metadata/
 BulkLoadFX/src/com/ratp/mrf/sdm/doc/icon/SDMIconDelegate.java
 BulkLoadFX/.classpath/
+BulkLoadFX/src/com/cimpa/services/common/components/rendering/guicomponents/PickerInputComponent.java
+BulkLoadFX/src/com/cimpa/services/common/components/rendering/renderers/PickerInputComponentRenderer.java
+BulkLoadFX/src/com/cimpa/services/common/components/rendering/renderers/SuggestTextBoxRenderer.java
+BulkLoadFX/src/com/soprasteria/test/SecurityRATPDataUtility.java
+BulkLoadFX/src/com/soprasteria/test/TypeModuleDataUtility.java
