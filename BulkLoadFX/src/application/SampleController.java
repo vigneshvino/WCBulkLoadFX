@@ -309,7 +309,7 @@ public class SampleController implements Initializable {
 
 		
 		
-		// Event when onClick of Export button
+		// Event when onClick of Export button under the database tab
 		exportdbButton.setOnAction(new EventHandler<ActionEvent>() {
 						
 			@Override
@@ -387,7 +387,7 @@ public class SampleController implements Initializable {
 				// TODO Auto-generated method stub
 				DirectoryChooser expDirectoryChooser = new DirectoryChooser();
 				File expDir = expDirectoryChooser.showDialog(hboxpane.getScene().getWindow());
-				String exportPath = "C:\\dev\\ExtractedFiles\\";
+				String exportPath = null;
 				if(expDir != null) {
 					System.out.println("Export Path: "+expDir.getAbsolutePath());
 					exportPath = expDir.getAbsolutePath();

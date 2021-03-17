@@ -363,7 +363,7 @@ public class ExtractWTPart implements RemoteAccess {
 								}
 							}
 						}
-						ibaValuesArrayList.add(ibaDisplayNameValue+":"+displayIBAValue);
+						ibaValuesArrayList.add(internalName+":"+displayIBAValue);
 					}
 					// Getting iba display value using typename
 			/*		TypeIdentifier identifier = TypedUtility.getTypeIdentifier(typeName);
