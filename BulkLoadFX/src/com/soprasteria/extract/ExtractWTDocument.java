@@ -1,9 +1,11 @@
 package com.soprasteria.extract;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import wt.method.RemoteMethodServer;
+import wt.util.WTException;
 
 public class ExtractWTDocument {
 	
@@ -30,6 +32,18 @@ public class ExtractWTDocument {
 			e.printStackTrace();
 		}
 
+	}
+	
+	/**
+	 * Exporting of wtdocument objects
+	 * @param type
+	 * @param exportPath
+	 * @throws WTException
+	 * @throws IOException
+	 */
+	public static void start(String type, String exportPath) throws WTException, IOException {
+		
+		
 	}
 
 }

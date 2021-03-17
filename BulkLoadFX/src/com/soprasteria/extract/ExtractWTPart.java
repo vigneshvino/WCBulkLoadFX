@@ -101,6 +101,13 @@ public class ExtractWTPart implements RemoteAccess {
 
 	}
 
+	/**
+	 * Export of wtpart objects
+	 * @param type
+	 * @param exportPath
+	 * @throws WTException
+	 * @throws IOException
+	 */
 	public static void start(String type, String exportPath) throws WTException, IOException {
 		// Export process starts from here
 		System.out.println("Object name from the application - " + type);
