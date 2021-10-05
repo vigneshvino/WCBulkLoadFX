@@ -2,7 +2,6 @@ package com.soprasteria.newFeature;
 
 import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -17,7 +16,7 @@ import java.io.IOException;
 
 public class AppPreferences {
 	
-	public static String CONFIG_FILE="D:\\WCBulkLoadFX_POC\\config_files\\appconfig.xml";
+	public static String CONFIG_FILE="D:\\WCBulkLoadFX_POC\\appconfig.xml";
 	
 	private String srcServerName;
 	private String srcServerCertName;
@@ -148,9 +147,7 @@ public class AppPreferences {
 		System.out.println(app.getUsername());
 		System.out.println(app.getPassword());
 */		
-		File file = new File(CONFIG_FILE);
-
-		XMLEncoder x = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(file)));
+		XMLEncoder x = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(CONFIG_FILE)));
 		x.writeObject(app);
 		x.close();
 	}
