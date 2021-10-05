@@ -319,7 +319,7 @@ public class SampleController implements Initializable {
 
 		
 		
-		// Event when onClick of Export button
+		// Event when onClick of Export button under the database tab
 		exportdbButton.setOnAction(new EventHandler<ActionEvent>() {
 						
 			@Override
@@ -395,11 +395,18 @@ public class SampleController implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
+				DirectoryChooser expDirectoryChooser = new DirectoryChooser();
+				File expDir = expDirectoryChooser.showDialog(hboxpane.getScene().getWindow());
+				String exportPath = null;
+				if(expDir != null) {
+					System.out.println("Export Path: "+expDir.getAbsolutePath());
+					exportPath = expDir.getAbsolutePath();
+				}
 				List<String> selectedValueList = new ArrayList<String>();
 				selectedValueList = UIUtilityActions.getSelectedExportObjectsList(CBWTPart,CBWTDocument,CBWfProcess,CBIncludeSubtypes,CBEPMDocument,CBChangeObjects,CBAdminObj);
 				System.out.println("Total number of objects selected is "+selectedValueList.size()+" list - "+selectedValueList);
 				try {
-					ExtractObjects.beginExtract(selectedValueList, srcServerHostName, srcServerUsername, srcServerPassword);
+					ExtractObjects.beginExtract(selectedValueList, srcServerHostName, srcServerUsername, srcServerPassword, exportPath);
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
