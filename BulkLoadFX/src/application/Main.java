@@ -21,19 +21,11 @@ import javafx.stage.WindowEvent;
  *
  */
 public class Main extends Application {
-
-	//to get the value of primary stage object from other classes
-	private static Stage pStage;
 	
-	public static Stage getpStage() {
-		return pStage;
-	}
-
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			// Main window
-			pStage = primaryStage;
 			HBox root = (HBox)FXMLLoader.load(getClass().getResource("Test.fxml"));
 			Scene scene = new Scene(root,645,550);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

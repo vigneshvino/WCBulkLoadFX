@@ -24,28 +24,22 @@ import com.soprasteria.newFeature.AppPreferences;
 import com.soprasteria.newFeature.SaveAppPreferences;
 
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -184,17 +178,9 @@ public class SampleController implements Initializable {
     @FXML
     private ToggleGroup extractionType;
 
-    @FXML
-    private Button filterOptions;
-    
-    //temporary button in extraction tab
-    @FXML
-    private Button recieveData;
     
    // private ObservableSet<CheckBox> selectedExpObjectsCB = FXCollections.observableSet();
-       
-    //Primary Stage Object
-    Stage stage = Main.getpStage();
+    
     
     @FXML
     void enableDistinctField(ActionEvent event) {
@@ -241,7 +227,9 @@ public class SampleController implements Initializable {
 	@FXML
 	private void dirChooserAction(ActionEvent event) {
 		DirectoryChooser chooser = new DirectoryChooser();
-			
+		
+		Stage stage = (Stage)loadTabAnchorPane.getScene().getWindow();
+		
 		File file = chooser.showDialog(stage);
 		
 		if(file!=null) {
@@ -393,31 +381,12 @@ public class SampleController implements Initializable {
 			
 		});
 		
-		// Event when a validation type is selected
-		preLoadValidationSchema.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-
-				RadioButton btn = (RadioButton) newValue;
-				String typeOfValidation = btn.getText();
-				if(typeOfValidation.equals("User Defined Mapping")) {
-					userDefinedMapping.setDisable(false);
-					stagedData.setDisable(true);
-				}
-				else {
-					userDefinedMapping.setDisable(true);
-					stagedData.setDisable(false);
-				}
-			}
-		});
-		
 		// Getting values from radio buttons selections
 		String sourceVersionSelected = UIUtilityActions.getSelectedValue(srcVersion);
 		String targetVersionSelected = UIUtilityActions.getSelectedValue(targetVersion);
 		String outputFileFormatSelected = UIUtilityActions.getSelectedValue(outputFileFormat);
 		String extractionTypeSelected = UIUtilityActions.getSelectedValue(extractionType);
-		//String preloadValidationSelected = UIUtilityActions.getSelectedValue(preLoadValidationSchema);
+		String preloadValidationSelected = UIUtilityActions.getSelectedValue(preLoadValidationSchema);
 		
 		
 		// Get the selected text boxes in extraction tab under 'select specific type' pane
@@ -444,43 +413,6 @@ public class SampleController implements Initializable {
 				}
 			}
 		});
-		
-		//opens a new window for configuring filter options
-		filterOptions.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				try {
-					final Stage popupStage = new Stage();
-					popupStage.initModality(Modality.APPLICATION_MODAL);
-					popupStage.initOwner(stage);
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("Filter.fxml"));
-					HBox popupHbox = (HBox)loader.load();
-	                Scene popupScene = new Scene(popupHbox, 645, 550);
-	                popupStage.setScene(popupScene);
-	                popupStage.setTitle("Filter Option");
-	                popupStage.setResizable(false);
-	                popupStage.show();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		//temporary action on button to check if we have received data from the filter options window
-		recieveData.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				
-				FOHolder holder = FOHolder.getInstance();
-				FO fo = holder.getFo();
-				System.out.println(fo);
-				
-			}
-			
-		});
-		
 	}
 	
 }
