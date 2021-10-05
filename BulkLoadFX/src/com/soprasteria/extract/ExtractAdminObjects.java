@@ -41,15 +41,50 @@ public class ExtractAdminObjects implements RemoteAccess{
 		RemoteMethodServer rms = RemoteMethodServer.getInstance(wc_url,serviceName);
 		rms.setUserName(username);
 		rms.setPassword(password);
-			
+		
+		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
+		HashMap<String, ArrayList<String>> mapLCStates = new HashMap<String, ArrayList<String>>();
+		
+		
 		try {
-				rms.invoke("fetchData", "com.soprasteria.extract.ExtractAdminObjects", null, new Class[] {}, 
-						new Object[] {});
-			    rms.invoke("fetchLCStates", "com.soprasteria.extract.ExtractAdminObjects", null, new Class[] {}, 
-			    		new Object[] {});
+			result = (ArrayList<ArrayList<String>>) rms.invoke("fetchData", "com.soprasteria.extract.ExtractAdminObjects", null, new Class[] {String.class}, new Object[] {});
+			mapLCStates = (HashMap<String, ArrayList<String>>) rms.invoke("fetchLCStates", "com.soprasteria.extract.ExtractAdminObjects", null, new Class[] {String.class}, new Object[] {});
 		} catch (Exception e) {
 			e.printStackTrace();
-		}	
+		}
+		
+		System.out.println("----**USERS**-------------------------");
+		System.out.println(result.get(0));
+		CreateXMLFiles.createUserXml(result.get(0));
+		System.out.println("--------------------------------------");
+		System.out.println();
+		System.out.println("----**TEAM_TEMPLATES**------------------");
+		System.out.println(result.get(1));
+		CreateXMLFiles.createTeamTemplateXml(result.get(1));
+		System.out.println("----------------------------------------");
+		System.out.println();
+		System.out.println("----**ORAGNIZATIONS**------------------");
+		System.out.println(result.get(2));
+		System.out.println("----------------------------------------");
+		System.out.println();
+		System.out.println("----**VIEWS_TEMPLATES**------------------");
+		System.out.println(result.get(3));
+		CreateXMLFiles.createViewXml(result.get(3));;
+		System.out.println("----------------------------------------");
+		System.out.println();
+		System.out.println("----**LIFE_CYCLE && STATES**------------------");
+		CreateXMLFiles.createLifeCycleXml(mapLCStates);
+		
+		for (Map.Entry<String, ArrayList<String>> lcEntry : mapLCStates.entrySet()) {
+			String lcName = lcEntry.getKey();
+			ArrayList<String> lcstate = lcEntry.getValue();
+			System.out.println("LifeCycle_Template : " + lcName);
+			System.out.println("LifeCycle_States : " + lcstate);
+			System.out.println("********");
+		}
+		System.out.println("----------------------------------------");
+		
+		
 	}
 	
 	/***
@@ -59,7 +94,7 @@ public class ExtractAdminObjects implements RemoteAccess{
 	 *  @throws WTException
 	 * */
 	
-	public static void fetchData() throws WTException {
+	public static List<List<String>> fetchData() throws WTException {
 
 		List<List<String>> fullData = new ArrayList<List<String>>();
 		
@@ -127,24 +162,7 @@ public class ExtractAdminObjects implements RemoteAccess{
 		
 		fullData.add(viewName);
 		
-		System.out.println("----**USERS**-------------------------");
-		System.out.println(fullData.get(0));
-		CreateXMLFiles.createUserXml(fullData.get(0));
-		System.out.println("--------------------------------------");
-		System.out.println();
-		System.out.println("----**TEAM_TEMPLATES**------------------");
-		System.out.println(fullData.get(1));
-		CreateXMLFiles.createTeamTemplateXml(fullData.get(1));
-		System.out.println("----------------------------------------");
-		System.out.println();
-		System.out.println("----**ORAGNIZATIONS**------------------");
-		System.out.println(fullData.get(2));
-		System.out.println("----------------------------------------");
-		System.out.println();
-		System.out.println("----**VIEWS_TEMPLATES**------------------");
-		System.out.println(fullData.get(3));
-		CreateXMLFiles.createViewXml(fullData.get(3));;
-		System.out.println("----------------------------------------");
+		return fullData;
 		
 	}
 	
@@ -155,7 +173,7 @@ public class ExtractAdminObjects implements RemoteAccess{
 	 *  @throws WTException
 	 * */
 	
-	public static void fetchLCStates() throws WTException {
+	public static HashMap<String, ArrayList<String>> fetchLCStates() throws WTException {
 		
 		HashMap<String, ArrayList<String>> lcStates = new HashMap<String, ArrayList<String>>();
 		
@@ -196,26 +214,21 @@ public class ExtractAdminObjects implements RemoteAccess{
 			states.addAll(LifeCycleHelper.service.findStates(lcTemplate.get(i)));
 						
 			for (int j=0;j<states.size();j++) {
-//				System.out.println("LifeCycle_Template : " + lcTemplateName + "\tStates : " + states.get(j).toString());
+				System.out.println("LifeCycle_Template : " + lcTemplateName + "\tStates : " + states.get(j).toString());
 				allstates.add(states.get(j).toString());
 			}
 			
 			lcStates.put(lcTemplateName, allstates);
 		}
 		
-				
-		System.out.println();
-		System.out.println("----**LIFE_CYCLE && STATES**------------------");
-		CreateXMLFiles.createLifeCycleXml(lcStates);
 		
 		for (Map.Entry<String, ArrayList<String>> lcEntry : lcStates.entrySet()) {
 			String lcName = lcEntry.getKey();
 			ArrayList<String> lcstate = lcEntry.getValue();
-			System.out.println("LifeCycle_Template : " + lcName);
-			System.out.println("LifeCycle_States : " + lcstate);
-			System.out.println("********");
+//			System.out.println("LifeCycle_Template : " + lcName + " , " + "LifeCycle_States : " + lcstate);
 		}
-		System.out.println("----------------------------------------");
+		
+		return lcStates;
 		
 	}
 
