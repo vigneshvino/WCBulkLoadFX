@@ -242,40 +242,50 @@ public class SampleController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		
-		File file = new File("D:\\WCBulkLoadFX_POC\\appconfig.xml");
-		AppPreferences appPrefs = null;
-		try {
-			FileInputStream fin = new FileInputStream(file);
-			XMLDecoder x = new XMLDecoder(new BufferedInputStream(fin));
-			appPrefs = (AppPreferences) x.readObject();
-			
-			srcServerHostName.setText(appPrefs.getSrcServerName());
-			srcServerCertName.setText(appPrefs.getSrcServerCertName());
-			srcServerUsername.setText(appPrefs.getSrcServerUsername());
-			srcServerPassword.setText(appPrefs.getSrcServerPassword());
-			
-			if (appPrefs.getSrcVersion() != null && (appPrefs.getSrcVersion()).equals(firstButton.getText())) {
-				firstButton.setSelected(true);
-			}else if (appPrefs.getSrcVersion() != null && (appPrefs.getSrcVersion()).equals(secondButton.getText())) {
-				secondButton.setSelected(true);
-			}else if (appPrefs.getSrcVersion() != null && (appPrefs.getSrcVersion()).equals(thirdButton.getText())) {
-				thirdButton.setSelected(true);
+		final String CONFIG = "D:\\WCBulkLoadFX_POC\\config_files\\appconfig.xml";
+		
+		File file = new File(CONFIG);
+		
+		if (file.getParentFile().exists()) {
+			AppPreferences appPrefs = null;
+			try {
+				FileInputStream fin = new FileInputStream(file);
+				XMLDecoder x = new XMLDecoder(new BufferedInputStream(fin));
+				appPrefs = (AppPreferences) x.readObject();
+				
+				srcServerHostName.setText(appPrefs.getSrcServerName());
+				srcServerCertName.setText(appPrefs.getSrcServerCertName());
+				srcServerUsername.setText(appPrefs.getSrcServerUsername());
+				srcServerPassword.setText(appPrefs.getSrcServerPassword());
+				
+				if (appPrefs.getSrcVersion() != null && (appPrefs.getSrcVersion()).equals(firstButton.getText())) {
+					firstButton.setSelected(true);
+				}else if (appPrefs.getSrcVersion() != null && (appPrefs.getSrcVersion()).equals(secondButton.getText())) {
+					secondButton.setSelected(true);
+				}else if (appPrefs.getSrcVersion() != null && (appPrefs.getSrcVersion()).equals(thirdButton.getText())) {
+					thirdButton.setSelected(true);
+				}
+				
+				
+				dbHostField.setText(appPrefs.getHost());
+				dbServiceName.setText(appPrefs.getDatabase());
+				dbPort.setText(appPrefs.getPort());
+				dbUsername.setText(appPrefs.getUsername());
+				dbPassword.setText(appPrefs.getPassword());
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				System.out.println("The User Config file not found!!!!");
 			}
-			
-			
-			dbHostField.setText(appPrefs.getHost());
-			dbServiceName.setText(appPrefs.getDatabase());
-			dbPort.setText(appPrefs.getPort());
-			dbUsername.setText(appPrefs.getUsername());
-			dbPassword.setText(appPrefs.getPassword());
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("The Preference file not found!!!!");
+		} else {
+			System.out.println("The config_files directory does not exist!!");
+			file.getParentFile().mkdirs();
+			System.out.println("The config_files directory created!!");
 		}
 		
 		distinctValue.setDisable(true);
 		whereValue.setDisable(true);
+		csvdelimiter.setDisable(true);
 		
 		// Event when onClick of Test DB Connection button
 		dbTestConnection.setOnAction(new EventHandler<ActionEvent>() {
